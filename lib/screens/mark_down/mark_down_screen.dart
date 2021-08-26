@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_toybox/screens/mark_down/edit_screen.dart';
 import 'package:flutter_toybox/widgets/app_scaffold.dart';
 
 class MarkDownScreen extends StatelessWidget {
   const MarkDownScreen({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return DocumentListScreen();
+  }
+}
+
+class DocumentListScreen extends StatelessWidget {
+  const DocumentListScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +24,9 @@ class MarkDownScreen extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             colors: [
-              Colors.indigo[900],
               Colors.indigo[600],
               Colors.indigo[400],
+              Colors.indigo[100],
             ],
           ),
         ),
@@ -24,9 +34,12 @@ class MarkDownScreen extends StatelessWidget {
           itemCount: 10,
           itemBuilder: (context, index) {
             return Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 4,
+              ),
               child: Container(
-                height: 60,
+                height: 80,
                 child: Card(
                   color: Colors.white,
                   elevation: 5,
@@ -41,7 +54,8 @@ class MarkDownScreen extends StatelessWidget {
         backgroundColor: const Color(0xff03dac6),
         foregroundColor: Colors.black,
         onPressed: () {
-          // Respond to button press
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (_) => EditScreen()));
         },
         child: Icon(Icons.add),
       ),
