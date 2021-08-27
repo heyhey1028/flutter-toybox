@@ -46,6 +46,18 @@ class MainDrawer extends StatelessWidget {
               title: 'MARK DOWN',
               navigateTo: MarkDownScreen(),
             ),
+            DrawerTile(
+              color: Colors.yellow[100],
+              icon: Icon(Icons.animation),
+              title: 'ANIMATION PLAYGROUND',
+              navigateTo: null,
+            ),
+            DrawerTile(
+              color: Colors.orange[100],
+              icon: Icon(Icons.widgets),
+              title: 'ICON MADNESS',
+              navigateTo: null,
+            ),
           ],
         ),
       ),
