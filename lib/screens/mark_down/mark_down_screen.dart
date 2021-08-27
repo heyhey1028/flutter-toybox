@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_toybox/screens/mark_down/edit_screen.dart';
+import 'package:flutter_toybox/screens/mark_down/model/document.dart';
+import 'package:flutter_toybox/screens/mark_down/preview_screen.dart';
 import 'package:flutter_toybox/widgets/app_scaffold.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 class MarkDownScreen extends StatelessWidget {
   const MarkDownScreen({Key key}) : super(key: key);
@@ -33,20 +37,7 @@ class DocumentListScreen extends StatelessWidget {
         child: ListView.builder(
           itemCount: 10,
           itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16.0,
-                vertical: 4,
-              ),
-              child: Container(
-                height: 80,
-                child: Card(
-                  color: Colors.white,
-                  elevation: 5,
-                  child: Text('THIS IS TEST CARD'),
-                ),
-              ),
-            );
+            return DocumentCard(onTap: () => onTapCard(context));
           },
         ),
       ),
@@ -58,6 +49,42 @@ class DocumentListScreen extends StatelessWidget {
               .push(MaterialPageRoute(builder: (_) => EditScreen()));
         },
         child: Icon(Icons.add),
+      ),
+    );
+  }
+
+  void onTapCard(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) => PreviewScreen()),
+    );
+  }
+}
+
+class DocumentCard extends StatelessWidget {
+  const DocumentCard({
+    this.document,
+    this.onTap,
+  });
+  final Document document;
+  final Function onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 16.0,
+        vertical: 4,
+      ),
+      child: GestureDetector(
+        onTap: () => onTap(),
+        child: Container(
+          height: 80,
+          child: Card(
+            color: Colors.white,
+            elevation: 5,
+            child: Text('THIS IS TEST CARD'),
+          ),
+        ),
       ),
     );
   }
