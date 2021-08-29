@@ -9,7 +9,7 @@ class EditScreenState extends ChangeNotifier {
   Future<void> setDoucmentData() async {
     final Map<String, dynamic> data = {
       "title": titleController.text,
-      "content": bodyController.text.replaceAll('\n', '<br>'),
+      "content": bodyController.text,
     };
 
     await FirebaseFirestore.instance.collection('documents').doc().set(data);

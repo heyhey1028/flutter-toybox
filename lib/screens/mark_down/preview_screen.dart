@@ -13,8 +13,6 @@ class PreviewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const String testData = '# Hello Markdown\n## Topics3';
-
     return Scaffold(
       appBar: AppBar(title: Text(document.title)),
       body: FutureBuilder(
