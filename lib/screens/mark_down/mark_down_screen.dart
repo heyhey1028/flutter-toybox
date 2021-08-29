@@ -1,10 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_toybox/screens/mark_down/edit_screen.dart';
 import 'package:flutter_toybox/screens/mark_down/model/document.dart';
 import 'package:flutter_toybox/screens/mark_down/preview_screen.dart';
 import 'package:flutter_toybox/widgets/app_scaffold.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 
 class MarkDownScreen extends StatelessWidget {
   const MarkDownScreen({Key key}) : super(key: key);
@@ -34,10 +33,27 @@ class DocumentListScreen extends StatelessWidget {
             ],
           ),
         ),
-        child: ListView.builder(
-          itemCount: 10,
-          itemBuilder: (context, index) {
-            return DocumentCard(onTap: () => onTapCard(context));
+        child: StreamBuilder<QuerySnapshot>(
+          stream:
+              FirebaseFirestore.instance.collection('documents').snapshots(),
+          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (snapshot.hasData) {
+              return ListView.builder(
+                itemCount: snapshot.data.docs.length,
+                itemBuilder: (context, index) {
+                  final Map<String, dynamic> data =
+                      snapshot.data.docs[index].data();
+                  final Document doc = Document(
+                      title: data['title'] as String,
+                      content: data['content'] as String);
+                  return DocumentCard(
+                    title: data['title'] as String,
+                    onTap: () => onTapCard(context, doc),
+                  );
+                },
+              );
+            }
+            return CircularProgressIndicator();
           },
         ),
       ),
@@ -53,9 +69,9 @@ class DocumentListScreen extends StatelessWidget {
     );
   }
 
-  void onTapCard(BuildContext context) {
+  void onTapCard(BuildContext context, Document document) {
     Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => PreviewScreen()),
+      MaterialPageRoute(builder: (_) => PreviewScreen(document: document)),
     );
   }
 }
@@ -63,9 +79,11 @@ class DocumentListScreen extends StatelessWidget {
 class DocumentCard extends StatelessWidget {
   const DocumentCard({
     this.document,
+    this.title,
     this.onTap,
   });
   final Document document;
+  final String title;
   final Function onTap;
 
   @override
@@ -82,7 +100,7 @@ class DocumentCard extends StatelessWidget {
           child: Card(
             color: Colors.white,
             elevation: 5,
-            child: Text('THIS IS TEST CARD'),
+            child: Text(title),
           ),
         ),
       ),
