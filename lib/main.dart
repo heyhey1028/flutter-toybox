@@ -1,7 +1,10 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_toybox/widgets/app_scaffold.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -10,6 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -21,9 +25,6 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatelessWidget {
   MyHomePage({Key key}) : super(key: key);
-
-  final _scaffoldKey = new GlobalKey<ScaffoldState>();
-
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
