@@ -5,6 +5,8 @@ class EditScreenState extends ChangeNotifier {
   TextEditingController titleController = TextEditingController();
   TextEditingController bodyController = TextEditingController();
   ScrollController scrollControler = ScrollController();
+  bool isEditMode = true;
+  bool get isPreviewMode => !isEditMode;
 
   Future<void> setDoucmentData() async {
     final Map<String, dynamic> data = {
@@ -13,5 +15,15 @@ class EditScreenState extends ChangeNotifier {
     };
 
     await FirebaseFirestore.instance.collection('documents').doc().set(data);
+  }
+
+  void onEditMode() {
+    isEditMode = true;
+    notifyListeners();
+  }
+
+  void onPreviewMode() {
+    isEditMode = false;
+    notifyListeners();
   }
 }

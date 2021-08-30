@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_toybox/screens/mark_down/edit_screen_state.dart';
 import 'package:provider/provider.dart';
 
@@ -54,40 +55,114 @@ class EditScreenBody extends StatelessWidget {
             icon: Icon(Icons.save),
           ),
           appBar: AppBar(
-            title: Text('EDIT SCREEN'),
+            title: state.isEditMode
+                ? TextField(
+                    controller: state.titleController,
+                    cursorColor: Colors.white,
+                    style: TextStyle(color: Colors.white, fontSize: 32),
+                    keyboardType: TextInputType.multiline,
+                  )
+                : FittedBox(child: Text(state.titleController.text)),
+            actions: [
+              EditActions(
+                isEditMode: state.isEditMode,
+                onTapEdit: () {
+                  FocusManager.instance.primaryFocus.unfocus();
+                  state.onEditMode();
+                },
+                onTapPreview: () {
+                  FocusManager.instance.primaryFocus.unfocus();
+                  state.onPreviewMode();
+                },
+              )
+            ],
           ),
           body: SafeArea(
             child: RawScrollbar(
+              controller: state.scrollControler,
               radius: Radius.circular(20),
               thumbColor: Colors.blue,
               thickness: 5,
               isAlwaysShown: true,
               child: SingleChildScrollView(
                 child: Container(
-                  padding: EdgeInsets.all(16),
-                  child: Column(
-                    children: <Widget>[
-                      TextField(
-                        controller: state.titleController,
-                      ),
-                      TextField(
-                        keyboardType: TextInputType.multiline,
-                        maxLines: null,
-                        controller: state.bodyController,
-                        textInputAction: TextInputAction.newline,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: InputBorder.none,
-                        ),
-                      ),
-                    ],
-                  ),
+                  height: MediaQuery.of(context).size.height,
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: state.isEditMode
+                      ? TextField(
+                          style: TextStyle(fontSize: 20),
+                          keyboardType: TextInputType.multiline,
+                          maxLines: null,
+                          controller: state.bodyController,
+                          textInputAction: TextInputAction.newline,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                          ),
+                        )
+                      : Markdown(
+                          controller: state.scrollControler,
+                          data: state.bodyController.text),
                 ),
               ),
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class EditActions extends StatelessWidget {
+  const EditActions({
+    Key key,
+    this.isEditMode = true,
+    @required this.onTapEdit,
+    @required this.onTapPreview,
+  }) : super(key: key);
+
+  final bool isEditMode;
+  final VoidCallback onTapEdit;
+  final VoidCallback onTapPreview;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.zero,
+      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+      // decoration: BoxDecoration(
+      //     border: Border.all(color: Colors.white),
+      //     borderRadius: BorderRadius.circular(8)),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          GestureDetector(
+            onTap: onTapEdit,
+            child: Container(
+              padding: EdgeInsets.all(8),
+              child: Icon(
+                Icons.mode_edit,
+                color: isEditMode ? Colors.grey : Colors.white,
+              ),
+            ),
+          ),
+          VerticalDivider(
+            thickness: 1,
+            color: Colors.white,
+            indent: 4,
+            endIndent: 4,
+            width: 5,
+          ),
+          GestureDetector(
+            onTap: onTapPreview,
+            child: Container(
+              padding: EdgeInsets.all(8),
+              child: Icon(
+                Icons.visibility,
+                color: !isEditMode ? Colors.grey : Colors.white,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
