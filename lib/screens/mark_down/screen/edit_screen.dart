@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:flutter_toybox/screens/mark_down/edit_screen_state.dart';
+import 'package:flutter_toybox/screens/mark_down/screen/edit_screen_view_model.dart';
 import 'package:provider/provider.dart';
 
 class EditScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => EditScreenState(),
+      create: (_) => EditScreenViewModel(),
       child: EditScreenBody(),
     );
   }
@@ -16,7 +16,7 @@ class EditScreen extends StatelessWidget {
 class EditScreenBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final EditScreenState state = context.watch<EditScreenState>();
+    final EditScreenViewModel state = context.watch<EditScreenViewModel>();
 
     return WillPopScope(
       onWillPop: () {
@@ -31,7 +31,7 @@ class EditScreenBody extends StatelessWidget {
             onPressed: () async {
               FocusManager.instance.primaryFocus.unfocus();
               try {
-                await state.setDoucmentData();
+                await state.saveDocument();
                 Navigator.of(context).pop();
               } catch (e) {
                 showDialog(
