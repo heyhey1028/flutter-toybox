@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_toybox/screens/mark_down/screen/edit_screen.dart';
 import 'package:flutter_toybox/screens/mark_down/model/document.dart';
-import 'package:flutter_toybox/screens/mark_down/screen/preview_screen.dart';
 import 'package:flutter_toybox/widgets/app_scaffold.dart';
 
 class DocumentListScreen extends StatelessWidget {
@@ -62,7 +61,7 @@ class DocumentListScreen extends StatelessWidget {
 
   void onTapCard(BuildContext context, Document document) {
     Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => PreviewScreen(document: document)),
+      MaterialPageRoute(builder: (_) => EditScreen(document: document)),
     );
   }
 }

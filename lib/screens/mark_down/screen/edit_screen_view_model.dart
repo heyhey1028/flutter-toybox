@@ -5,7 +5,7 @@ import 'package:flutter_toybox/screens/mark_down/repository/document_repository.
 class EditScreenViewModel extends ChangeNotifier {
   TextEditingController titleController = TextEditingController();
   TextEditingController bodyController = TextEditingController();
-  ScrollController scrollControler = ScrollController();
+  ScrollController scrollControler = ScrollController(initialScrollOffset: 0);
   bool isEditMode = true;
   bool get isPreviewMode => !isEditMode;
 
@@ -13,6 +13,13 @@ class EditScreenViewModel extends ChangeNotifier {
     final Document saveDoc =
         Document(title: titleController.text, content: bodyController.text);
     await DocumentRepository().setDoucmentData(saveDoc);
+  }
+
+  void initializeWithDocument(Document document) {
+    titleController.text = document.title;
+    bodyController.text = document.content;
+    onPreviewMode();
+    notifyListeners();
   }
 
   void onEditMode() {
@@ -23,5 +30,13 @@ class EditScreenViewModel extends ChangeNotifier {
   void onPreviewMode() {
     isEditMode = false;
     notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    titleController.dispose();
+    bodyController.dispose();
+    scrollControler.dispose();
+    super.dispose();
   }
 }
