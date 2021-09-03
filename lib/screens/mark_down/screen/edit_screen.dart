@@ -86,20 +86,95 @@ class EditScreenBody extends StatelessWidget {
                 ),
                 Align(
                   alignment: Alignment.bottomLeft,
-                  child: Row(
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.format_bold),
-                        onPressed: () => print(
-                            'selected text:${state.bodyController.selection.textInside(state.bodyController.text)}'),
-                      )
-                    ],
+                  child: IconButtonsContainer(
+                    onPressed: () => print(
+                        'selected text:${state.bodyController.selection.textInside(state.bodyController.text)}'),
                   ),
                 )
               ],
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class IconButtonsContainer extends StatelessWidget {
+  const IconButtonsContainer({Key key, this.onPressed}) : super(key: key);
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      // margin: EdgeInsets.only(bottom: 80),
+      height: 60,
+      decoration: BoxDecoration(
+        color: Colors.grey[300],
+        // border: Border.all(
+        //   color: Colors.black,
+        // ),
+      ),
+      child: ListView(
+        padding: EdgeInsets.all(4),
+        scrollDirection: Axis.horizontal,
+        physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics()),
+        children: [
+          IconButton(
+            icon: Icon(Icons.title),
+            onPressed: onPressed,
+          ),
+          IconButton(
+            icon: Icon(Icons.format_bold),
+            onPressed: onPressed,
+          ),
+          IconButton(
+            icon: Icon(Icons.format_underline),
+            onPressed: onPressed,
+          ),
+          IconButton(
+            icon: Icon(Icons.format_italic),
+            onPressed: onPressed,
+          ),
+          IconButton(
+            icon: Icon(Icons.format_quote),
+            onPressed: onPressed,
+          ),
+          IconButton(
+            icon: Icon(Icons.format_list_bulleted),
+            onPressed: onPressed,
+          ),
+          IconButton(
+            icon: Icon(Icons.format_list_numbered),
+            onPressed: onPressed,
+          ),
+          IconButton(
+            icon: Icon(Icons.check_box_outline_blank),
+            onPressed: onPressed,
+          ),
+          IconButton(
+            icon: Icon(Icons.code),
+            onPressed: onPressed,
+          ),
+          IconButton(
+            icon: Icon(Icons.link),
+            onPressed: onPressed,
+          ),
+          IconButton(
+            icon: Icon(Icons.insert_photo),
+            onPressed: onPressed,
+          ),
+          IconButton(
+            icon: Icon(Icons.table_chart),
+            onPressed: onPressed,
+          ),
+          IconButton(
+            icon: Icon(Icons.format_indent_increase),
+            onPressed: onPressed,
+          ),
+          SizedBox(width: 60)
+        ],
       ),
     );
   }
@@ -209,32 +284,35 @@ class SaveButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton.extended(
-      onPressed: () async {
-        FocusManager.instance.primaryFocus.unfocus();
-        try {
-          onPressed();
-          Navigator.of(context).pop();
-        } catch (e) {
-          showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: Text('Error'),
-                content: Text(e.toString()),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: Text('OK'),
-                  )
-                ],
-              );
-            },
-          );
-        }
-      },
-      label: Text('SAVE'),
-      icon: Icon(Icons.save),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 56),
+      child: FloatingActionButton.extended(
+        onPressed: () async {
+          FocusManager.instance.primaryFocus.unfocus();
+          try {
+            onPressed();
+            Navigator.of(context).pop();
+          } catch (e) {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: Text('Error'),
+                  content: Text(e.toString()),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: Text('OK'),
+                    )
+                  ],
+                );
+              },
+            );
+          }
+        },
+        label: Text('SAVE'),
+        icon: Icon(Icons.save),
+      ),
     );
   }
 }
