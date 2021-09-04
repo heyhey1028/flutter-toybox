@@ -80,15 +80,21 @@ class EditScreenBody extends StatelessWidget {
                               bodyController: state.bodyController)
                           : Markdown(
                               controller: state.scrollControler,
-                              data: state.bodyController.text),
+                              data: state.bodyController.text,
+                              styleSheet: MarkdownStyleSheet.fromTheme(
+                                      Theme.of(context))
+                                  .copyWith(
+                                      p: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1
+                                          .copyWith(fontSize: 20.0))),
                     ),
                   ),
                 ),
                 Align(
                   alignment: Alignment.bottomLeft,
                   child: IconButtonsContainer(
-                    onPressed: () => print(
-                        'selected text:${state.bodyController.selection.textInside(state.bodyController.text)}'),
+                    textController: state.bodyController,
                   ),
                 )
               ],
@@ -101,8 +107,8 @@ class EditScreenBody extends StatelessWidget {
 }
 
 class IconButtonsContainer extends StatelessWidget {
-  const IconButtonsContainer({Key key, this.onPressed}) : super(key: key);
-  final VoidCallback onPressed;
+  const IconButtonsContainer({Key key, this.textController}) : super(key: key);
+  final TextEditingController textController;
 
   @override
   Widget build(BuildContext context) {
@@ -123,60 +129,80 @@ class IconButtonsContainer extends StatelessWidget {
         children: [
           IconButton(
             icon: Icon(Icons.title),
-            onPressed: onPressed,
+            onPressed: () => addEffectStart('# '),
           ),
           IconButton(
             icon: Icon(Icons.format_bold),
-            onPressed: onPressed,
+            onPressed: () => addEffectStartAndEnd('*'),
           ),
           IconButton(
             icon: Icon(Icons.format_underline),
-            onPressed: onPressed,
+            onPressed: () => addEffectStartAndEnd('_'),
           ),
           IconButton(
             icon: Icon(Icons.format_italic),
-            onPressed: onPressed,
+            onPressed: null,
           ),
           IconButton(
             icon: Icon(Icons.format_quote),
-            onPressed: onPressed,
+            onPressed: null,
           ),
           IconButton(
             icon: Icon(Icons.format_list_bulleted),
-            onPressed: onPressed,
+            onPressed: null,
           ),
           IconButton(
             icon: Icon(Icons.format_list_numbered),
-            onPressed: onPressed,
+            onPressed: null,
           ),
           IconButton(
             icon: Icon(Icons.check_box_outline_blank),
-            onPressed: onPressed,
+            onPressed: null,
           ),
           IconButton(
             icon: Icon(Icons.code),
-            onPressed: onPressed,
+            onPressed: null,
           ),
           IconButton(
             icon: Icon(Icons.link),
-            onPressed: onPressed,
+            onPressed: null,
           ),
           IconButton(
             icon: Icon(Icons.insert_photo),
-            onPressed: onPressed,
+            onPressed: null,
           ),
           IconButton(
             icon: Icon(Icons.table_chart),
-            onPressed: onPressed,
+            onPressed: null,
           ),
           IconButton(
             icon: Icon(Icons.format_indent_increase),
-            onPressed: onPressed,
+            onPressed: null,
           ),
           SizedBox(width: 60)
         ],
       ),
     );
+  }
+
+  void addEffectStart(String replacement) {
+    final int startOffset = textController.selection.start;
+    textController.text =
+        textController.text.replaceRange(startOffset, startOffset, replacement);
+    textController.selection = TextSelection.fromPosition(
+        TextPosition(offset: startOffset + replacement.length));
+  }
+
+  void addEffectStartAndEnd(String mark) {
+    final int startOffset = textController.selection.start;
+    final int endOffset = textController.selection.end;
+    final String selectedText =
+        textController.selection.textInside(textController.text);
+    final String replaceText = mark + selectedText + mark;
+    textController.text =
+        textController.text.replaceRange(startOffset, endOffset, replaceText);
+    textController.selection = TextSelection.fromPosition(
+        TextPosition(offset: startOffset + replaceText.length));
   }
 }
 
