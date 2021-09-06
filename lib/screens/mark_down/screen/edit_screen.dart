@@ -81,13 +81,7 @@ class EditScreenBody extends StatelessWidget {
                           : Markdown(
                               controller: state.scrollControler,
                               data: state.bodyController.text,
-                              styleSheet: MarkdownStyleSheet.fromTheme(
-                                      Theme.of(context))
-                                  .copyWith(
-                                      p: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1
-                                          .copyWith(fontSize: 20.0))),
+                            ),
                     ),
                   ),
                 ),
@@ -141,27 +135,27 @@ class IconButtonsContainer extends StatelessWidget {
           ),
           IconButton(
             icon: Icon(Icons.format_italic),
-            onPressed: null,
+            onPressed: () => addEffectStartAndEnd('_'),
           ),
           IconButton(
             icon: Icon(Icons.format_quote),
-            onPressed: null,
+            onPressed: () => addEffectStart('> '),
           ),
           IconButton(
             icon: Icon(Icons.format_list_bulleted),
-            onPressed: null,
+            onPressed: () => addEffectStart('- '),
           ),
           IconButton(
             icon: Icon(Icons.format_list_numbered),
-            onPressed: null,
+            onPressed: () => addEffectStart('1. '),
           ),
           IconButton(
             icon: Icon(Icons.check_box_outline_blank),
-            onPressed: null,
+            onPressed: () => addEffectStart('- [ ] '),
           ),
           IconButton(
             icon: Icon(Icons.code),
-            onPressed: null,
+            onPressed: () => addEffectStartAndEnd('`'),
           ),
           IconButton(
             icon: Icon(Icons.link),
