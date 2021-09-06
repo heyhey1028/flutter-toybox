@@ -8,6 +8,9 @@ class DocumentRepository {
       "content": document.content,
     };
 
-    await FirebaseFirestore.instance.collection('documents').doc().set(data);
+    await FirebaseFirestore.instance
+        .collection('documents')
+        .doc(document.id)
+        .set(data);
   }
 }

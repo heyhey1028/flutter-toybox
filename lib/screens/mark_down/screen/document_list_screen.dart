@@ -11,7 +11,7 @@ class DocumentListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppScaffold(
       body: Container(
-        // height: double.infinity,
+        height: double.infinity,
         width: double.infinity,
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -19,7 +19,7 @@ class DocumentListScreen extends StatelessWidget {
             colors: [
               Colors.indigo[600],
               Colors.indigo[400],
-              Colors.indigo[100],
+              Colors.indigo[200],
             ],
           ),
         ),
@@ -29,13 +29,17 @@ class DocumentListScreen extends StatelessWidget {
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.hasData) {
               return ListView.builder(
+                physics: const BouncingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics()),
                 itemCount: snapshot.data.docs.length,
                 itemBuilder: (context, index) {
                   final Map<String, dynamic> data =
                       snapshot.data.docs[index].data();
                   final Document doc = Document(
-                      title: data['title'] as String,
-                      content: data['content'] as String);
+                    id: snapshot.data.docs[index].id,
+                    title: data['title'] as String,
+                    content: data['content'] as String,
+                  );
                   return DocumentCard(
                     title: data['title'] as String,
                     onTap: () => onTapCard(context, doc),
