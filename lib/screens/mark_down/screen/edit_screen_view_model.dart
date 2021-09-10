@@ -15,7 +15,7 @@ class EditScreenViewModel extends ChangeNotifier {
         id: currentDocument?.id,
         title: titleController.text,
         content: bodyController.text);
-    await DocumentRepository().setDoucmentData(saveDoc);
+    await DocumentRepositoryImpl().setDocumentData(saveDoc);
   }
 
   void initializeWithDocument(Document document) {

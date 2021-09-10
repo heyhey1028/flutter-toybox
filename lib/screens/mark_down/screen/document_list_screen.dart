@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_toybox/screens/mark_down/repository/document_repository.dart';
 import 'package:flutter_toybox/screens/mark_down/screen/edit_screen.dart';
 import 'package:flutter_toybox/screens/mark_down/model/document.dart';
 import 'package:flutter_toybox/widgets/app_scaffold.dart';
@@ -23,29 +24,25 @@ class DocumentListScreen extends StatelessWidget {
             ],
           ),
         ),
-        child: StreamBuilder<QuerySnapshot>(
-          stream:
-              FirebaseFirestore.instance.collection('documents').snapshots(),
-          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (snapshot.hasData) {
+        child: StreamBuilder<List<Document>>(
+          stream: DocumentRepositoryImpl().getDocuments(),
+          builder: (context, AsyncSnapshot<List<Document>> snapshots) {
+            if (snapshots.hasData) {
               return ListView.builder(
                 physics: const BouncingScrollPhysics(
                     parent: AlwaysScrollableScrollPhysics()),
-                itemCount: snapshot.data.docs.length,
+                itemCount: snapshots.data.length,
                 itemBuilder: (context, index) {
-                  final Map<String, dynamic> data =
-                      snapshot.data.docs[index].data();
-                  final Document doc = Document(
-                    id: snapshot.data.docs[index].id,
-                    title: data['title'] as String,
-                    content: data['content'] as String,
-                  );
                   return DocumentCard(
-                    title: data['title'] as String,
-                    onTap: () => onTapCard(context, doc),
+                    title: snapshots.data[index].id,
+                    onTap: () => onTapCard(context, snapshots.data[index]),
                   );
                 },
               );
+            }
+
+            if (snapshots.hasError) {
+              return Text(snapshots.error.toString());
             }
             return CircularProgressIndicator();
           },
@@ -87,13 +84,19 @@ class DocumentCard extends StatelessWidget {
         horizontal: 16.0,
         vertical: 4,
       ),
-      child: GestureDetector(
-        onTap: () => onTap(),
-        child: Container(
-          height: 80,
-          child: Card(
-            color: Colors.white,
-            elevation: 5,
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(60.0),
+        ),
+        color: Colors.white,
+        elevation: 5,
+        child: InkWell(
+          onTap: () => onTap(),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(60)),
+            ),
+            height: 80,
             child: Text(title),
           ),
         ),
