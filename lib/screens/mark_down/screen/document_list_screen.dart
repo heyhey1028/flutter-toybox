@@ -12,6 +12,7 @@ class DocumentListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppScaffold(
       body: Container(
+        // padding: EdgeInsets.all(32),
         height: double.infinity,
         width: double.infinity,
         decoration: BoxDecoration(
@@ -34,7 +35,8 @@ class DocumentListScreen extends StatelessWidget {
                 itemCount: snapshots.data.length,
                 itemBuilder: (context, index) {
                   return DocumentCard(
-                    title: snapshots.data[index].id,
+                    document: snapshots.data[index],
+                    title: snapshots.data[index].title,
                     onTap: () => onTapCard(context, snapshots.data[index]),
                   );
                 },
@@ -86,18 +88,32 @@ class DocumentCard extends StatelessWidget {
       ),
       child: Card(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(60.0),
+          borderRadius: BorderRadius.circular(10.0),
         ),
         color: Colors.white,
         elevation: 5,
         child: InkWell(
           onTap: () => onTap(),
           child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(60)),
+            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+            height: 120,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 8),
+                Text(
+                  document?.content ?? '',
+                  softWrap: true,
+                  maxLines: 4,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: Colors.grey[600]),
+                )
+              ],
             ),
-            height: 80,
-            child: Text(title),
           ),
         ),
       ),

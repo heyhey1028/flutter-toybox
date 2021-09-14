@@ -14,9 +14,10 @@ class DocumentRepositoryImpl implements DocumentRepository {
 
   Stream<List<Document>> getDocuments() {
     return FirebaseFirestore.instance.collection('documents').snapshots().map(
-          (QuerySnapshot qsnapshot) => qsnapshot.docs.map(
-            (QueryDocumentSnapshot qdoc) => fromDocumentSnapshot(qdoc),
-          ),
+          (QuerySnapshot<Map<String, dynamic>> qsnapshot) => qsnapshot.docs
+              .map((QueryDocumentSnapshot<Map<String, dynamic>> qdoc) =>
+                  fromDocumentSnapshot(qdoc))
+              .toList(),
         );
   }
 
