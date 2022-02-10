@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_toybox/screens/mark_down/repository/document_repository.dart';
 import 'package:flutter_toybox/screens/mark_down/screen/edit_screen.dart';
@@ -11,8 +10,12 @@ class DocumentListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
+      title: Text(
+        'Markdown Blogs',
+        textAlign: TextAlign.center,
+        style: TextStyle(color: Colors.white),
+      ),
       body: Container(
-        // padding: EdgeInsets.all(32),
         height: double.infinity,
         width: double.infinity,
         decoration: BoxDecoration(

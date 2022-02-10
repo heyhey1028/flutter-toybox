@@ -5,10 +5,12 @@ class AppScaffold extends StatelessWidget {
   AppScaffold({
     this.body,
     this.floatingActionButton,
+    this.title,
   });
 
   final Widget body;
   final Widget floatingActionButton;
+  final Widget title;
   final _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
@@ -16,6 +18,7 @@ class AppScaffold extends StatelessWidget {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
+        title: title,
         elevation: 0,
         backgroundColor: Colors.transparent,
         iconTheme: IconThemeData(color: Colors.white),

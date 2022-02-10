@@ -35,16 +35,16 @@ class MainDrawer extends StatelessWidget {
               navigateTo: MyHomePage(),
             ),
             DrawerTile(
-              color: Colors.purple[100],
-              icon: Icon(Icons.palette),
-              title: 'COLOR PALLETS',
-              navigateTo: MyHomePage(),
-            ),
-            DrawerTile(
               color: Colors.indigo[100],
               icon: Icon(Icons.notes),
               title: 'MARK DOWN',
               navigateTo: MarkDownScreen(),
+            ),
+            DrawerTile(
+              color: Colors.purple[100],
+              icon: Icon(Icons.group),
+              title: 'FLUTTER SHARE',
+              navigateTo: MyHomePage(),
             ),
             DrawerTile(
               color: Colors.yellow[100],
@@ -66,14 +66,20 @@ class MainDrawer extends StatelessWidget {
 }
 
 class DrawerTile extends StatelessWidget {
-  const DrawerTile(
-      {Key key, this.title, this.icon, this.color, this.navigateTo})
-      : super(key: key);
+  const DrawerTile({
+    Key key,
+    this.title,
+    this.icon,
+    this.color,
+    this.navigateTo,
+    this.fontFamily,
+  }) : super(key: key);
 
   final String title;
   final Icon icon;
   final Color color;
   final Widget navigateTo;
+  final String fontFamily;
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +87,10 @@ class DrawerTile extends StatelessWidget {
       color: color,
       child: ListTile(
         leading: icon,
-        title: Text(title),
+        title: Text(
+          title,
+          style: TextStyle(fontFamily: fontFamily),
+        ),
         trailing: Icon(Icons.chevron_right_rounded),
         onTap: () {
           Navigator.of(context).pop();
