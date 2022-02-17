@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_toybox/main.dart';
+import 'package:flutter_toybox/screens/just_audio/just_audio_screen.dart';
 import 'package:flutter_toybox/screens/mark_down/mark_down_screen.dart';
 
 class MainDrawer extends StatelessWidget {
@@ -39,6 +40,12 @@ class MainDrawer extends StatelessWidget {
               icon: Icon(Icons.notes),
               title: 'MARK DOWN',
               navigateTo: MarkDownScreen(),
+            ),
+            DrawerTile(
+              color: Colors.red[100],
+              icon: Icon(Icons.music_note),
+              title: 'JUST AUDIO',
+              navigateTo: JustAudioScreen(),
             ),
             DrawerTile(
               color: Colors.purple[100],
