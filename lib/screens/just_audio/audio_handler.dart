@@ -13,13 +13,13 @@ Future<AudioServiceHandler> initeAudioService() async {
 }
 
 class AudioServiceHandler extends BaseAudioHandler {
-  final AudioPlayer _player = AudioPlayer();
+  final AudioPlayer player = AudioPlayer();
 
   Future<void> initPlayer(MediaItem item) async {
     try {
       _notifyAudioHandlerAboutPlaybackEvents();
       mediaItem.add(item);
-      _player.setAudioSource(AudioSource.uri(Uri.parse(item.id)));
+      player.setAudioSource(AudioSource.uri(Uri.parse(item.id)));
     } catch (e) {
       print('ERROR OCCURED:$e');
     }
@@ -27,8 +27,8 @@ class AudioServiceHandler extends BaseAudioHandler {
 
   /* --- SUBSCRIBE --- */
   void _notifyAudioHandlerAboutPlaybackEvents() {
-    _player.playbackEventStream.listen((PlaybackEvent event) {
-      final playing = _player.playing;
+    player.playbackEventStream.listen((PlaybackEvent event) {
+      final playing = player.playing;
       playbackState.add(playbackState.value.copyWith(
         controls: [
           MediaControl.skipToPrevious,
@@ -46,11 +46,11 @@ class AudioServiceHandler extends BaseAudioHandler {
           ProcessingState.buffering: AudioProcessingState.buffering,
           ProcessingState.ready: AudioProcessingState.ready,
           ProcessingState.completed: AudioProcessingState.completed,
-        }[_player.processingState],
+        }[player.processingState],
         playing: playing,
-        updatePosition: _player.position,
-        bufferedPosition: _player.bufferedPosition,
-        speed: _player.speed,
+        updatePosition: player.position,
+        bufferedPosition: player.bufferedPosition,
+        speed: player.speed,
         queueIndex: event.currentIndex,
       ));
     });
@@ -60,18 +60,18 @@ class AudioServiceHandler extends BaseAudioHandler {
   @override
   Future<void> play() async {
     print('play called');
-    await _player.play();
+    await player.play();
   }
 
   @override
-  Future<void> pause() => _player.pause();
+  Future<void> pause() => player.pause();
 
   @override
-  Future<void> seek(Duration position) => _player.seek(position);
+  Future<void> seek(Duration position) => player.seek(position);
 
   @override
   Future<void> stop() {
-    _player.stop();
+    player.stop();
     return super.stop();
   }
 }

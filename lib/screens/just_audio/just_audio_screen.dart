@@ -59,10 +59,13 @@ class _JustAudioScreen extends StatelessWidget {
                 builder: (BuildContext ctx, AudioState state, _) {
                   switch (state) {
                     case AudioState.loading:
-                      return SizedBox(
-                        height: 32,
-                        width: 32,
-                        child: CircularProgressIndicator(),
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SizedBox(
+                          height: 32,
+                          width: 32,
+                          child: CircularProgressIndicator(),
+                        ),
                       );
                     case AudioState.ready:
                     case AudioState.paused:

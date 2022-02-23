@@ -5,7 +5,11 @@ import 'package:flutter_toybox/screens/services/service_locator.dart';
 import 'package:rxdart/rxdart.dart';
 
 class AudioScreenController extends ChangeNotifier {
-  ProgressBarState progressBarState;
+  ProgressBarState progressBarState = ProgressBarState(
+    current: Duration.zero,
+    buffered: Duration.zero,
+    total: Duration.zero,
+  );
   AudioState audioState = AudioState.paused;
 
   AudioServiceHandler _handler = getIt<AudioServiceHandler>();
@@ -34,6 +38,8 @@ class AudioScreenController extends ChangeNotifier {
     _handler.playbackState.listen((PlaybackState state) {
       print('current state:${state.processingState}');
       print('playing:${state.playing}');
+      hasCompleted(state);
+
       if (isLoadingState(state)) {
         setAudioState(AudioState.loading);
       } else if (isAudioReady(state)) {
@@ -41,6 +47,8 @@ class AudioScreenController extends ChangeNotifier {
       } else if (isAudioPlaying(state)) {
         setAudioState(AudioState.playing);
       } else if (isAudioPaused(state)) {
+        setAudioState(AudioState.paused);
+      } else if (hasCompleted(state)) {
         setAudioState(AudioState.paused);
       }
     });
@@ -50,12 +58,15 @@ class AudioScreenController extends ChangeNotifier {
     CombineLatestStream.combine3(
       AudioService.position,
       _handler.playbackState,
-      _handler.mediaItem,
-      (Duration current, PlaybackState state, MediaItem mediaItem) =>
+      // _handler.mediaItem
+      // (Duration current, PlaybackState state, MediaItem mediaItem) =>
+      _handler.player.durationStream,
+      (Duration current, PlaybackState state, Duration total) =>
           ProgressBarState(
         current: current,
         buffered: state.bufferedPosition,
-        total: mediaItem?.duration ?? Duration.zero,
+        // total: mediaItem?.duraion ?? Duration.zero
+        total: total ?? Duration.zero,
       ),
     ).listen((ProgressBarState state) => setProgressBarState(state));
   }
@@ -72,7 +83,7 @@ class AudioScreenController extends ChangeNotifier {
   }
 
   bool isAudioPlaying(PlaybackState state) {
-    return state.playing;
+    return state.playing && !hasCompleted(state);
   }
 
   bool isAudioPaused(PlaybackState state) {
@@ -85,6 +96,7 @@ class AudioScreenController extends ChangeNotifier {
 
   @override
   void dispose() {
+    _handler.stop();
     super.dispose();
   }
 
