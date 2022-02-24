@@ -1,5 +1,6 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:volume_controller/volume_controller.dart';
 
 Future<AudioServiceHandler> initeAudioService() async {
   return await AudioService.init(
@@ -56,10 +57,9 @@ class AudioServiceHandler extends BaseAudioHandler {
     });
   }
 
-  /* --- METHODS --- */
+  /* --- Audio Control --- */
   @override
   Future<void> play() async {
-    print('play called');
     await player.play();
   }
 
@@ -73,5 +73,15 @@ class AudioServiceHandler extends BaseAudioHandler {
   Future<void> stop() {
     player.stop();
     return super.stop();
+  }
+
+  /* --- Volume Control --- */
+
+  double getVolume() {
+    return player.volume;
+  }
+
+  void setVolume(double volume) {
+    player.setVolume(volume);
   }
 }
