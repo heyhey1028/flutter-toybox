@@ -6,21 +6,44 @@ import 'package:flutter_toybox/screens/just_audio/audio_handler.dart';
 import 'package:flutter_toybox/screens/services/service_locator.dart';
 import 'package:rxdart/rxdart.dart';
 
-class AudioScreenController extends ChangeNotifier {
+class MultipleAudioState extends ChangeNotifier {
   ProgressBarState progressBarState = ProgressBarState(
     current: Duration.zero,
     buffered: Duration.zero,
     total: Duration.zero,
   );
   AudioState audioState = AudioState.paused;
+  AnimationController volumeControl;
   StreamSubscription _playbackSubscription;
   StreamSubscription _progressBarSubscription;
+  StreamSubscription _volumeSubscription;
+  double volumeFactor = 1;
 
   AudioServiceHandler _handler = getIt<AudioServiceHandler>();
 
   // for test
   static final _item = MediaItem(
-    id: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
+    id: 'https://firebasestorage.googleapis.com/v0/b/flutter-toybox.appspot.com/o/audios%2Fmusic_box.mp3?alt=media&token=cf88a17e-bbe9-46de-95a8-e855a23fbb3b',
+    album: "Science Friday",
+    title: "A Salute To Head-Scratching Science",
+    artist: "Science Friday and WNYC Studios",
+    duration: const Duration(milliseconds: 5739820),
+    artUri: Uri.parse(
+        'https://media.wnyc.org/i/1400/1400/l/80/1/ScienceFriday_WNYCStudios_1400.jpg'),
+  );
+
+  static final _item1 = MediaItem(
+    id: 'https://firebasestorage.googleapis.com/v0/b/flutter-toybox.appspot.com/o/audios%2Fsuzu_mushi.mp3?alt=media&token=8222b9e0-8b4d-4e0f-ae2c-6e602606dfcd',
+    album: "Science Friday",
+    title: "A Salute To Head-Scratching Science",
+    artist: "Science Friday and WNYC Studios",
+    duration: const Duration(milliseconds: 5739820),
+    artUri: Uri.parse(
+        'https://media.wnyc.org/i/1400/1400/l/80/1/ScienceFriday_WNYCStudios_1400.jpg'),
+  );
+
+  static final _item2 = MediaItem(
+    id: 'https://firebasestorage.googleapis.com/v0/b/flutter-toybox.appspot.com/o/audios%2Fwave.mp3?alt=media&token=40388f98-210c-4f4d-8c72-ac0b21232dd5',
     album: "Science Friday",
     title: "A Salute To Head-Scratching Science",
     artist: "Science Friday and WNYC Studios",
@@ -30,10 +53,12 @@ class AudioScreenController extends ChangeNotifier {
   );
 
   /* --- INITIALIZE --- */
-  void init() {
+  Future<void> init(TickerProvider provider) async {
     _handler.initPlayer(_item);
     _listenToPlaybackState();
     _listenForProgressBarState();
+    await _listenToVolumeControl(provider);
+    _listenVolume();
   }
 
   /* --- SUBSCRIBE --- */
@@ -41,10 +66,6 @@ class AudioScreenController extends ChangeNotifier {
   void _listenToPlaybackState() {
     _playbackSubscription =
         _handler.playbackState.listen((PlaybackState state) {
-      print('current state:${state.processingState}');
-      print('playing:${state.playing}');
-      hasCompleted(state);
-
       if (isLoadingState(state)) {
         setAudioState(AudioState.loading);
       } else if (isAudioReady(state)) {
@@ -76,6 +97,23 @@ class AudioScreenController extends ChangeNotifier {
     ).listen((ProgressBarState state) => setProgressBarState(state));
   }
 
+  Future<void> _listenToVolumeControl(TickerProvider provider) async {
+    final Duration duration = await _handler.player.durationStream.first;
+    volumeControl = AnimationController(vsync: provider, duration: duration)
+      ..addListener(() => _handler.setVolume(1 - volumeControl.value));
+    notifyListeners();
+  }
+
+  void _listenVolume() {
+    _volumeSubscription = _handler.player.volumeStream.listen((double p0) {
+      volumeFactor = p0;
+      double currentVol1 = _handler.subPlayer1?.volume;
+      double currentVol2 = _handler.subPlayer2?.volume;
+      if (currentVol1 != null) _handler.setVolume1(sliderValue1 * p0);
+      if (currentVol2 != null) _handler.setVolume2(sliderValue2 * p0);
+    });
+  }
+
   /* --- UTILITY METHODS --- */
   bool isLoadingState(PlaybackState state) {
     return state.processingState == AudioProcessingState.loading ||
@@ -102,8 +140,10 @@ class AudioScreenController extends ChangeNotifier {
   @override
   void dispose() {
     _handler.stop();
+    volumeControl.dispose();
     _playbackSubscription.cancel();
     _progressBarSubscription.cancel();
+    _volumeSubscription.cancel();
     super.dispose();
   }
 
@@ -119,12 +159,48 @@ class AudioScreenController extends ChangeNotifier {
     notifyListeners();
   }
 
+  /* --- SUB AUDIO CONTROL --- */
+  void setSubAudio1() {
+    _handler.setAudioSource1(_item1);
+  }
+
+  void setSubAudio2() {
+    _handler.setAudioSource2(_item2);
+  }
+
+  double sliderValue1 = 1;
+  double sliderValue2 = 1;
+
+  void setVolume1(double value) {
+    sliderValue1 = value;
+    _handler.setVolume1(value * volumeFactor);
+    notifyListeners();
+  }
+
+  void setVolume2(double value) {
+    sliderValue2 = value;
+    _handler.setVolume2(value * volumeFactor);
+    notifyListeners();
+  }
+
   /* --- PLAYER CONTROL  --- */
-  void play() => _handler.play();
+  void play() {
+    _handler.play();
+    volumeControl.forward();
+  }
 
-  void pause() => _handler.pause();
+  void pause() {
+    _handler.pause();
+    volumeControl.stop();
+  }
 
-  void seek(Duration position) => _handler.seek(position);
+  void seek(Duration position) {
+    _handler.seek(position);
+    final double current =
+        position.inMicroseconds / progressBarState.total.inMicroseconds;
+    volumeControl.value = current;
+    notifyListeners();
+  }
 
   void stop() => _handler.stop();
 }
