@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_toybox/screens/just_audio/audio_handler.dart';
@@ -14,6 +16,8 @@ class VolumeControlState extends ChangeNotifier {
   AnimationController volumeControl;
 
   AudioServiceHandler _handler = getIt<AudioServiceHandler>();
+  StreamSubscription _playbackSubscription;
+  StreamSubscription _progressBarSubscription;
 
   // for test
   static final _item = MediaItem(
@@ -37,7 +41,8 @@ class VolumeControlState extends ChangeNotifier {
   /* --- SUBSCRIBE --- */
 
   void _listenToPlaybackState() {
-    _handler.playbackState.listen((PlaybackState state) {
+    _playbackSubscription =
+        _handler.playbackState.listen((PlaybackState state) {
       if (isLoadingState(state)) {
         setAudioState(AudioState.loading);
       } else if (isAudioReady(state)) {
@@ -53,7 +58,7 @@ class VolumeControlState extends ChangeNotifier {
   }
 
   void _listenForProgressBarState() {
-    CombineLatestStream.combine3(
+    _progressBarSubscription = CombineLatestStream.combine3(
       AudioService.position,
       _handler.playbackState,
       // _handler.mediaItem
@@ -103,6 +108,8 @@ class VolumeControlState extends ChangeNotifier {
   void dispose() {
     _handler.stop();
     volumeControl.dispose();
+    _playbackSubscription.cancel();
+    _progressBarSubscription.cancel();
     super.dispose();
   }
 
