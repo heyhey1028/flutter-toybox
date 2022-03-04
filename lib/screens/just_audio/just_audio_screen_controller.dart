@@ -1,12 +1,10 @@
 import 'dart:async';
-
-import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_toybox/screens/just_audio/audio_handler.dart';
-import 'package:flutter_toybox/screens/services/service_locator.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:just_audio/just_audio.dart';
 
-class AudioScreenController extends ChangeNotifier {
+class JustAudioScreenState extends ChangeNotifier {
+  AudioPlayer _audioPlayer;
   ProgressBarState progressBarState = ProgressBarState(
     current: Duration.zero,
     buffered: Duration.zero,
@@ -16,22 +14,12 @@ class AudioScreenController extends ChangeNotifier {
   StreamSubscription _playbackSubscription;
   StreamSubscription _progressBarSubscription;
 
-  AudioServiceHandler _handler = getIt<AudioServiceHandler>();
-
-  // for test
-  static final _item = MediaItem(
-    id: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
-    album: "Science Friday",
-    title: "A Salute To Head-Scratching Science",
-    artist: "Science Friday and WNYC Studios",
-    duration: const Duration(milliseconds: 5739820),
-    artUri: Uri.parse(
-        'https://media.wnyc.org/i/1400/1400/l/80/1/ScienceFriday_WNYCStudios_1400.jpg'),
-  );
+  static final _url =
+      'https://firebasestorage.googleapis.com/v0/b/flutter-toybox.appspot.com/o/audios%2Fmusic_box.mp3?alt=media&token=cf88a17e-bbe9-46de-95a8-e855a23fbb3b';
 
   /* --- INITIALIZE --- */
   void init() {
-    _handler.initPlayer(_item);
+    _audioPlayer = AudioPlayer()..setUrl(_url);
     _listenToPlaybackState();
     _listenForProgressBarState();
   }
@@ -40,10 +28,9 @@ class AudioScreenController extends ChangeNotifier {
 
   void _listenToPlaybackState() {
     _playbackSubscription =
-        _handler.playbackState.listen((PlaybackState state) {
+        _audioPlayer.playerStateStream.listen((PlayerState state) {
       print('current state:${state.processingState}');
       print('playing:${state.playing}');
-      hasCompleted(state);
 
       if (isLoadingState(state)) {
         setAudioState(AudioState.loading);
@@ -61,47 +48,41 @@ class AudioScreenController extends ChangeNotifier {
 
   void _listenForProgressBarState() {
     _progressBarSubscription = CombineLatestStream.combine3(
-      AudioService.position,
-      _handler.playbackState,
-      // _handler.mediaItem
-      // (Duration current, PlaybackState state, MediaItem mediaItem) =>
-      _handler.player.durationStream,
-      (Duration current, PlaybackState state, Duration total) =>
-          ProgressBarState(
+      _audioPlayer.positionStream,
+      _audioPlayer.bufferedPositionStream,
+      _audioPlayer.durationStream,
+      (Duration current, Duration buffer, Duration total) => ProgressBarState(
         current: current,
-        buffered: state.bufferedPosition,
-        // total: mediaItem?.duraion ?? Duration.zero
+        buffered: buffer,
         total: total ?? Duration.zero,
       ),
     ).listen((ProgressBarState state) => setProgressBarState(state));
   }
 
   /* --- UTILITY METHODS --- */
-  bool isLoadingState(PlaybackState state) {
-    return state.processingState == AudioProcessingState.loading ||
-        state.processingState == AudioProcessingState.buffering;
+  bool isLoadingState(PlayerState state) {
+    return state.processingState == ProcessingState.loading ||
+        state.processingState == ProcessingState.buffering;
   }
 
-  bool isAudioReady(PlaybackState state) {
-    return state.processingState == AudioProcessingState.ready &&
-        !state.playing;
+  bool isAudioReady(PlayerState state) {
+    return state.processingState == ProcessingState.ready && !state.playing;
   }
 
-  bool isAudioPlaying(PlaybackState state) {
+  bool isAudioPlaying(PlayerState state) {
     return state.playing && !hasCompleted(state);
   }
 
-  bool isAudioPaused(PlaybackState state) {
+  bool isAudioPaused(PlayerState state) {
     return !state.playing && !isLoadingState(state);
   }
 
-  bool hasCompleted(PlaybackState state) {
-    return state.processingState == AudioProcessingState.completed;
+  bool hasCompleted(PlayerState state) {
+    return state.processingState == ProcessingState.completed;
   }
 
   @override
   void dispose() {
-    _handler.stop();
     _playbackSubscription.cancel();
     _progressBarSubscription.cancel();
     super.dispose();
@@ -120,13 +101,13 @@ class AudioScreenController extends ChangeNotifier {
   }
 
   /* --- PLAYER CONTROL  --- */
-  void play() => _handler.play();
+  void play() => _audioPlayer.play();
 
-  void pause() => _handler.pause();
+  void pause() => _audioPlayer.pause();
 
-  void seek(Duration position) => _handler.seek(position);
+  void seek(Duration position) => _audioPlayer.seek(position);
 
-  void stop() => _handler.stop();
+  void stop() => _audioPlayer.stop();
 }
 
 class ProgressBarState {
