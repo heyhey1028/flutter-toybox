@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_toybox/main.dart';
 import 'package:flutter_toybox/screens/just_audio/just_audio_screen.dart';
 import 'package:flutter_toybox/screens/mark_down/mark_down_screen.dart';
+import 'package:flutter_toybox/screens/volume_control/volume_control_screen.dart';
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({Key key}) : super(key: key);
@@ -46,6 +47,12 @@ class MainDrawer extends StatelessWidget {
               icon: Icon(Icons.music_note),
               title: 'JUST AUDIO',
               navigateTo: JustAudioScreen(),
+            ),
+            DrawerTile(
+              color: Colors.green[100],
+              icon: Icon(Icons.volume_up),
+              title: 'VOLUME CONTROL',
+              navigateTo: VolumeControlScreen(),
             ),
             DrawerTile(
               color: Colors.purple[100],

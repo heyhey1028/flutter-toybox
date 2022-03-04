@@ -49,4 +49,4 @@ app.*.map.json
 /iOS/Runner/GoogleService-Info.plist
 
 # pubspecs
-pubspec.lock
+*.lock
