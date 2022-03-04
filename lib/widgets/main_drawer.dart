@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_toybox/main.dart';
 import 'package:flutter_toybox/screens/just_audio/just_audio_screen.dart';
 import 'package:flutter_toybox/screens/mark_down/mark_down_screen.dart';
+import 'package:flutter_toybox/screens/multiple_audio_play/multiple_audio_screen.dart';
 import 'package:flutter_toybox/screens/volume_control/volume_control_screen.dart';
 
 class MainDrawer extends StatelessWidget {
@@ -56,9 +57,9 @@ class MainDrawer extends StatelessWidget {
             ),
             DrawerTile(
               color: Colors.purple[100],
-              icon: Icon(Icons.group),
-              title: 'FLUTTER SHARE',
-              navigateTo: MyHomePage(),
+              icon: Icon(Icons.queue_music),
+              title: 'MULTIPLE AUDIO',
+              navigateTo: MultipleAudioScreen(),
             ),
             DrawerTile(
               color: Colors.yellow[100],
