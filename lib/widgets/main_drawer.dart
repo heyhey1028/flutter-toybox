@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_toybox/main.dart';
+import 'package:flutter_toybox/screens/background_play/background_play_screen.dart';
 import 'package:flutter_toybox/screens/just_audio/just_audio_screen.dart';
 import 'package:flutter_toybox/screens/mark_down/mark_down_screen.dart';
 import 'package:flutter_toybox/screens/multiple_audio_play/multiple_audio_screen.dart';
@@ -50,6 +51,12 @@ class MainDrawer extends StatelessWidget {
               navigateTo: JustAudioScreen(),
             ),
             DrawerTile(
+              color: Colors.orange[100],
+              icon: Icon(Icons.bluetooth_audio_rounded),
+              title: 'BACKGROUND PLAY',
+              navigateTo: BackgroundPlayScreen(),
+            ),
+            DrawerTile(
               color: Colors.green[100],
               icon: Icon(Icons.volume_up),
               title: 'VOLUME CONTROL',
@@ -65,12 +72,6 @@ class MainDrawer extends StatelessWidget {
               color: Colors.yellow[100],
               icon: Icon(Icons.animation),
               title: 'ANIMATION PLAYGROUND',
-              navigateTo: null,
-            ),
-            DrawerTile(
-              color: Colors.orange[100],
-              icon: Icon(Icons.widgets),
-              title: 'ICON MADNESS',
               navigateTo: null,
             ),
           ],

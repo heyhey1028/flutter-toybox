@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_toybox/screens/just_audio/audio_handler.dart';
+import 'package:flutter_toybox/screens/background_play/audio_handler.dart';
 import 'package:flutter_toybox/screens/services/service_locator.dart';
 import 'package:rxdart/rxdart.dart';
 
