@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  MyHomePage({Key key}) : super(key: key);
+  MyHomePage({super.key});
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
@@ -44,9 +44,9 @@ class MyHomePage extends StatelessWidget {
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   colors: [
-                    Colors.blue[900],
-                    Colors.blue[600],
-                    Colors.blue[400],
+                    Colors.blue[900]!,
+                    Colors.blue[600]!,
+                    Colors.blue[400]!,
                   ],
                 ),
               ),

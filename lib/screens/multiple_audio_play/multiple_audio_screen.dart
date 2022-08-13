@@ -5,7 +5,7 @@ import 'package:flutter_toybox/widgets/app_scaffold.dart';
 import 'package:provider/provider.dart';
 
 class MultipleAudioScreen extends StatelessWidget {
-  const MultipleAudioScreen({Key key}) : super(key: key);
+  const MultipleAudioScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class MultipleAudioScreen extends StatelessWidget {
 }
 
 class _MultipleAudioScreen extends StatefulWidget {
-  const _MultipleAudioScreen({Key key}) : super(key: key);
+  const _MultipleAudioScreen();
 
   @override
   State<_MultipleAudioScreen> createState() => _MultipleAudioScreenState();
@@ -40,9 +40,9 @@ class _MultipleAudioScreenState extends State<_MultipleAudioScreen>
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             colors: [
-              Colors.purple[600],
-              Colors.purple[400],
-              Colors.purple[200],
+              Colors.purple[600]!,
+              Colors.purple[400]!,
+              Colors.purple[200]!,
             ],
           ),
         ),

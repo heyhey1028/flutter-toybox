@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class Document {
   Document({
-    this.id,
-    @required this.title,
-    this.content,
+    required this.id,
+    required this.title,
+    required this.content,
   });
 
   final String id;

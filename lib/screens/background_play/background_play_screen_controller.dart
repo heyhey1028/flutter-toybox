@@ -13,8 +13,8 @@ class BackgroundPlayController extends ChangeNotifier {
     total: Duration.zero,
   );
   AudioState audioState = AudioState.paused;
-  StreamSubscription _playbackSubscription;
-  StreamSubscription _progressBarSubscription;
+  late StreamSubscription _playbackSubscription;
+  late StreamSubscription _progressBarSubscription;
 
   AudioServiceHandler _handler = getIt<AudioServiceHandler>();
 
@@ -65,7 +65,7 @@ class BackgroundPlayController extends ChangeNotifier {
       // _handler.mediaItem
       // (Duration current, PlaybackState state, MediaItem mediaItem) =>
       _handler.player.durationStream,
-      (Duration current, PlaybackState state, Duration total) =>
+      (Duration current, PlaybackState state, Duration? total) =>
           ProgressBarState(
         current: current,
         buffered: state.bufferedPosition,
@@ -130,9 +130,9 @@ class BackgroundPlayController extends ChangeNotifier {
 
 class ProgressBarState {
   ProgressBarState({
-    this.current,
-    this.buffered,
-    this.total,
+    required this.current,
+    required this.buffered,
+    required this.total,
   });
 
   final Duration current;

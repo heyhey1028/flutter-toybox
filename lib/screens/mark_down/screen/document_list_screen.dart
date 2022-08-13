@@ -5,7 +5,7 @@ import 'package:flutter_toybox/screens/mark_down/model/document.dart';
 import 'package:flutter_toybox/widgets/app_scaffold.dart';
 
 class DocumentListScreen extends StatelessWidget {
-  const DocumentListScreen({Key key}) : super(key: key);
+  const DocumentListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +22,9 @@ class DocumentListScreen extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             colors: [
-              Colors.indigo[600],
-              Colors.indigo[400],
-              Colors.indigo[200],
+              Colors.indigo[600]!,
+              Colors.indigo[400]!,
+              Colors.indigo[200]!,
             ],
           ),
         ),
@@ -35,12 +35,12 @@ class DocumentListScreen extends StatelessWidget {
               return ListView.builder(
                 physics: const BouncingScrollPhysics(
                     parent: AlwaysScrollableScrollPhysics()),
-                itemCount: snapshots.data.length,
+                itemCount: snapshots.data?.length,
                 itemBuilder: (context, index) {
                   return DocumentCard(
-                    document: snapshots.data[index],
-                    title: snapshots.data[index].title,
-                    onTap: () => onTapCard(context, snapshots.data[index]),
+                    document: snapshots.data![index],
+                    title: snapshots.data![index].title,
+                    onTap: () => onTapCard(context, snapshots.data![index]),
                   );
                 },
               );
@@ -57,8 +57,8 @@ class DocumentListScreen extends StatelessWidget {
         backgroundColor: const Color(0xff03dac6),
         foregroundColor: Colors.black,
         onPressed: () {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (_) => EditScreen()));
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => EditScreen(document: null)));
         },
         child: Icon(Icons.add),
       ),
@@ -74,9 +74,9 @@ class DocumentListScreen extends StatelessWidget {
 
 class DocumentCard extends StatelessWidget {
   const DocumentCard({
-    this.document,
-    this.title,
-    this.onTap,
+    required this.document,
+    required this.title,
+    required this.onTap,
   });
   final Document document;
   final String title;
@@ -109,7 +109,7 @@ class DocumentCard extends StatelessWidget {
                 ),
                 SizedBox(height: 8),
                 Text(
-                  document?.content ?? '',
+                  document.content,
                   softWrap: true,
                   maxLines: 4,
                   overflow: TextOverflow.ellipsis,

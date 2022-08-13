@@ -3,7 +3,7 @@ import 'package:flutter_toybox/screens/mark_down/model/document.dart';
 import 'package:flutter_toybox/screens/mark_down/repository/document_repository.dart';
 
 class EditScreenViewModel extends ChangeNotifier {
-  Document currentDocument;
+  late Document currentDocument;
   TextEditingController titleController = TextEditingController();
   TextEditingController bodyController = TextEditingController();
   ScrollController scrollControler = ScrollController(initialScrollOffset: 0);
@@ -12,7 +12,7 @@ class EditScreenViewModel extends ChangeNotifier {
 
   Future<void> saveDocument() async {
     final Document saveDoc = Document(
-        id: currentDocument?.id,
+        id: currentDocument.id,
         title: titleController.text,
         content: bodyController.text);
     await DocumentRepositoryImpl().setDocumentData(saveDoc);

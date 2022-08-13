@@ -16,8 +16,8 @@ Future<AudioServiceHandler> initeAudioService() async {
 
 class AudioServiceHandler extends BaseAudioHandler {
   final AudioPlayer player = AudioPlayer();
-  AudioPlayer subPlayer1;
-  AudioPlayer subPlayer2;
+  late AudioPlayer subPlayer1;
+  late AudioPlayer subPlayer2;
 
   Future<void> initPlayer(MediaItem item) async {
     try {
@@ -50,7 +50,7 @@ class AudioServiceHandler extends BaseAudioHandler {
           ProcessingState.buffering: AudioProcessingState.buffering,
           ProcessingState.ready: AudioProcessingState.ready,
           ProcessingState.completed: AudioProcessingState.completed,
-        }[player.processingState],
+        }[player.processingState]!,
         playing: playing,
         updatePosition: player.position,
         bufferedPosition: player.bufferedPosition,

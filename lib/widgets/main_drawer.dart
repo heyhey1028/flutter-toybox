@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_toybox/main.dart';
 import 'package:flutter_toybox/screens/background_play/background_play_screen.dart';
+import 'package:flutter_toybox/screens/google_map/google_map_screen.dart';
 import 'package:flutter_toybox/screens/just_audio/just_audio_screen.dart';
 import 'package:flutter_toybox/screens/mark_down/mark_down_screen.dart';
 import 'package:flutter_toybox/screens/multiple_audio_play/multiple_audio_screen.dart';
 import 'package:flutter_toybox/screens/volume_control/volume_control_screen.dart';
 
 class MainDrawer extends StatelessWidget {
-  const MainDrawer({Key key}) : super(key: key);
+  const MainDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,46 +34,46 @@ class MainDrawer extends StatelessWidget {
               ),
             ),
             DrawerTile(
-              color: Colors.lightBlue[100],
+              color: Colors.lightBlue[100]!,
               icon: Icon(Icons.home),
               title: 'HOME',
               navigateTo: MyHomePage(),
             ),
             DrawerTile(
-              color: Colors.indigo[100],
+              color: Colors.indigo[100]!,
               icon: Icon(Icons.notes),
               title: 'MARK DOWN',
               navigateTo: MarkDownScreen(),
             ),
             DrawerTile(
-              color: Colors.red[100],
+              color: Colors.red[100]!,
               icon: Icon(Icons.music_note),
               title: 'JUST AUDIO',
               navigateTo: JustAudioScreen(),
             ),
             DrawerTile(
-              color: Colors.orange[100],
+              color: Colors.orange[100]!,
               icon: Icon(Icons.bluetooth_audio_rounded),
               title: 'BACKGROUND PLAY',
               navigateTo: BackgroundPlayScreen(),
             ),
             DrawerTile(
-              color: Colors.green[100],
+              color: Colors.green[100]!,
               icon: Icon(Icons.volume_up),
               title: 'VOLUME CONTROL',
               navigateTo: VolumeControlScreen(),
             ),
             DrawerTile(
-              color: Colors.purple[100],
+              color: Colors.purple[100]!,
               icon: Icon(Icons.queue_music),
               title: 'MULTIPLE AUDIO',
               navigateTo: MultipleAudioScreen(),
             ),
             DrawerTile(
-              color: Colors.yellow[100],
-              icon: Icon(Icons.animation),
-              title: 'ANIMATION PLAYGROUND',
-              navigateTo: null,
+              color: Colors.yellow[100]!,
+              icon: Icon(Icons.map),
+              title: 'GOOGLE MAP',
+              navigateTo: GoogleMapScreen(),
             ),
           ],
         ),
@@ -83,19 +84,19 @@ class MainDrawer extends StatelessWidget {
 
 class DrawerTile extends StatelessWidget {
   const DrawerTile({
-    Key key,
+    super.key,
     this.title,
     this.icon,
     this.color,
-    this.navigateTo,
+    required this.navigateTo,
     this.fontFamily,
-  }) : super(key: key);
+  });
 
-  final String title;
-  final Icon icon;
-  final Color color;
+  final String? title;
+  final Icon? icon;
+  final Color? color;
   final Widget navigateTo;
-  final String fontFamily;
+  final String? fontFamily;
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +105,7 @@ class DrawerTile extends StatelessWidget {
       child: ListTile(
         leading: icon,
         title: Text(
-          title,
+          title ?? '',
           style: TextStyle(fontFamily: fontFamily),
         ),
         trailing: Icon(Icons.chevron_right_rounded),

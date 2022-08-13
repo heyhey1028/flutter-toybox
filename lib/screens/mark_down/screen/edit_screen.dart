@@ -5,15 +5,15 @@ import 'package:flutter_toybox/screens/mark_down/screen/edit_screen_view_model.d
 import 'package:provider/provider.dart';
 
 class EditScreen extends StatelessWidget {
-  EditScreen({this.document});
+  EditScreen({required this.document});
 
-  final Document document;
+  final Document? document;
 
   @override
   Widget build(BuildContext context) {
     if (document != null) {
       return ChangeNotifierProvider(
-        create: (_) => EditScreenViewModel()..initializeWithDocument(document),
+        create: (_) => EditScreenViewModel()..initializeWithDocument(document!),
         child: EditScreenBody(),
       );
     } else {
@@ -31,13 +31,13 @@ class EditScreenBody extends StatelessWidget {
     final EditScreenViewModel state = context.watch<EditScreenViewModel>();
 
     return WillPopScope(
-      onWillPop: () {
-        FocusManager.instance.primaryFocus.unfocus();
+      onWillPop: () async {
+        FocusManager.instance.primaryFocus?.unfocus();
         Navigator.of(context).pop(false);
-        return;
+        return false;
       },
       child: GestureDetector(
-        onTap: () => FocusManager.instance.primaryFocus.unfocus(),
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: Scaffold(
           floatingActionButton: state.isEditMode
               ? SaveButton(onPressed: () async {
@@ -52,11 +52,11 @@ class EditScreenBody extends StatelessWidget {
               EditActions(
                 isEditMode: state.isEditMode,
                 onTapEdit: () {
-                  FocusManager.instance.primaryFocus.unfocus();
+                  FocusManager.instance.primaryFocus?.unfocus();
                   state.onEditMode();
                 },
                 onTapPreview: () {
-                  FocusManager.instance.primaryFocus.unfocus();
+                  FocusManager.instance.primaryFocus?.unfocus();
                   state.onPreviewMode();
                 },
               )
@@ -101,7 +101,7 @@ class EditScreenBody extends StatelessWidget {
 }
 
 class IconButtonsContainer extends StatelessWidget {
-  const IconButtonsContainer({Key key, this.textController}) : super(key: key);
+  const IconButtonsContainer({super.key, required this.textController});
   final TextEditingController textController;
 
   @override
@@ -202,11 +202,11 @@ class IconButtonsContainer extends StatelessWidget {
 
 class EditActions extends StatelessWidget {
   const EditActions({
-    Key key,
+    super.key,
     this.isEditMode = true,
-    @required this.onTapEdit,
-    @required this.onTapPreview,
-  }) : super(key: key);
+    required this.onTapEdit,
+    required this.onTapPreview,
+  });
 
   final bool isEditMode;
   final VoidCallback onTapEdit;
@@ -254,8 +254,7 @@ class EditActions extends StatelessWidget {
 }
 
 class AppBarTextField extends StatelessWidget {
-  const AppBarTextField({Key key, @required this.titleController})
-      : super(key: key);
+  const AppBarTextField({super.key, required this.titleController});
 
   final TextEditingController titleController;
 
@@ -273,9 +272,9 @@ class AppBarTextField extends StatelessWidget {
 
 class ContentTextField extends StatelessWidget {
   const ContentTextField({
-    Key key,
-    @required this.bodyController,
-  }) : super(key: key);
+    super.key,
+    required this.bodyController,
+  });
 
   final TextEditingController bodyController;
 
@@ -296,9 +295,9 @@ class ContentTextField extends StatelessWidget {
 
 class SaveButton extends StatelessWidget {
   const SaveButton({
-    Key key,
-    @required this.onPressed,
-  }) : super(key: key);
+    super.key,
+    required this.onPressed,
+  });
 
   final VoidCallback onPressed;
 
@@ -308,7 +307,7 @@ class SaveButton extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 56),
       child: FloatingActionButton.extended(
         onPressed: () async {
-          FocusManager.instance.primaryFocus.unfocus();
+          FocusManager.instance.primaryFocus?.unfocus();
           try {
             onPressed();
             Navigator.of(context).pop();

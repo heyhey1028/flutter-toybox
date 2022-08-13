@@ -5,7 +5,7 @@ import 'package:flutter_toybox/widgets/app_scaffold.dart';
 import 'package:provider/provider.dart';
 
 class JustAudioScreen extends StatelessWidget {
-  const JustAudioScreen({Key key}) : super(key: key);
+  const JustAudioScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class JustAudioScreen extends StatelessWidget {
 }
 
 class _JustAudioScreen extends StatelessWidget {
-  const _JustAudioScreen({Key key}) : super(key: key);
+  const _JustAudioScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +28,9 @@ class _JustAudioScreen extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             colors: [
-              Colors.red[600],
-              Colors.red[400],
-              Colors.red[200],
+              Colors.red[600]!,
+              Colors.red[400]!,
+              Colors.red[200]!,
             ],
           ),
         ),
