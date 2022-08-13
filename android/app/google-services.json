@@ -7,6 +7,42 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:464877474049:android:cf1864d5509614d3788b00",
+        "android_client_info": {
+          "package_name": "com.example.flutter_river_flow"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "464877474049-36mgs9v4rbt7dmfk0pnasneb2asqebas.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBorQWia_DSQzE03IVmLgv0ZNCo-LNYHTY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "464877474049-36mgs9v4rbt7dmfk0pnasneb2asqebas.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "464877474049-28vnid7mchivmhqt85f9dkldqv7p11kr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterToybox"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:464877474049:android:8f2dadf24a53d1e2788b00",
         "android_client_info": {
           "package_name": "com.example.flutter_toybox"
@@ -29,6 +65,13 @@
             {
               "client_id": "464877474049-36mgs9v4rbt7dmfk0pnasneb2asqebas.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "464877474049-28vnid7mchivmhqt85f9dkldqv7p11kr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterToybox"
+              }
             }
           ]
         }
