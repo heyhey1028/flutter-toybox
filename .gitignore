@@ -50,3 +50,6 @@ app.*.map.json
 
 # pubspecs
 *.lock
+
+# dotenv
+.env*
