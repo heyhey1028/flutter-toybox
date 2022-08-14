@@ -40,6 +40,8 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <meta-data android:name="com.google.android.geo.API_KEY"
+              android:value="AIzaSyCm2f7ptpjpE7Ybp4-IDhqa9K2TcCUkAVM"/>
         <service android:name="com.ryanheise.audioservice.AudioService">
           <intent-filter>
             <action android:name="android.media.browse.MediaBrowserService" />
