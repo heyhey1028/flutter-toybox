@@ -7,3 +7,4 @@ refresh:
 	rm -rf ios/Podfile.lock
 	flutter clean
 	flutter pub get
+    cd ios; pod install
