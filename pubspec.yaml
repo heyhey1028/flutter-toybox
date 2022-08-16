@@ -24,6 +24,7 @@ dependencies:
   rxdart: ^0.27.3
   flutter_dotenv: ^5.0.2
   google_maps_flutter: ^2.1.10
+  geolocator: ^9.0.1
 
 
 
