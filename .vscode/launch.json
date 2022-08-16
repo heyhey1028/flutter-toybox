@@ -8,6 +8,27 @@
         "type": "dart",
         "args": ["-v","--debug"]
       },
+      {
+        "name":"Launch ios",
+        "request": "launch",
+        "type": "dart",
+        "deviceId": "96F6EEFE-73AF-4488-8096-C5CDEBE34BD5"
+      },
+      {
+        "name":"Launch android",
+        "request": "launch",
+        "type": "dart",
+        "deviceId": "emulator-5554"
+      }
+    ],
+    "compounds": [
+      {
+        "name": "All emulators",
+        "configurations": [
+          "Launch ios",
+          "Launch android",
+        ]
+      }
     ]
   }
   
