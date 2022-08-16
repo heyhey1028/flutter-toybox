@@ -1,11 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.flutter_toybox">
+    <!-- uses-permission should be right below the root (https://stackoverflow.com/questions/56315719/aapt-error-unexpected-element-uses-permission-found-in-manifestapplicatio) -->
+  <uses-permission android:name="android.permission.WAKE_LOCK"/>
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+  <uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="flutter_toybox"
         android:icon="@mipmap/ic_launcher">
-        <uses-permission android:name="android.permission.WAKE_LOCK"/>
-        <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-        <uses-permission android:name="android.permission.INTERNET"/>
         <activity
             android:name="com.ryanheise.audioservice.AudioServiceActivity"
             android:launchMode="singleTop"
@@ -41,7 +42,7 @@
             android:name="flutterEmbedding"
             android:value="2" />
         <meta-data android:name="com.google.android.geo.API_KEY"
-              android:value="AIzaSyCm2f7ptpjpE7Ybp4-IDhqa9K2TcCUkAVM"/>
+              android:value="@string/google_map_api_key"/>
         <service android:name="com.ryanheise.audioservice.AudioService">
           <intent-filter>
             <action android:name="android.media.browse.MediaBrowserService" />
