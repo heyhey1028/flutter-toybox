@@ -1,0 +1,19 @@
+enum GenreCode {
+  izakaya,
+  dining_bar,
+  sosaku,
+  washoku,
+  yoshoku,
+  italian_french,
+  chinese,
+  yakiniku,
+  asian_ethnic,
+  country,
+  karaoke,
+  bar,
+  ramen,
+  cafe_sweets,
+  others,
+  okonomiyaki,
+  korean;
+}

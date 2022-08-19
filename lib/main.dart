@@ -1,8 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_toybox/firebase_options.dart';
-import 'package:flutter_toybox/screens/services/service_locator.dart';
-import 'package:flutter_toybox/widgets/app_scaffold.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+import 'firebase_options.dart';
+import 'services/service_locator.dart';
+import 'widgets/app_scaffold.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -10,6 +12,8 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await initServiceLocator();
+
+  DotEnv().load(fileName: '.env.development');
   runApp(MyApp());
 }
 

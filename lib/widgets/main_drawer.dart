@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_toybox/main.dart';
-import 'package:flutter_toybox/screens/background_play/background_play_screen.dart';
-import 'package:flutter_toybox/screens/google_map/google_map_screen.dart';
-import 'package:flutter_toybox/screens/just_audio/just_audio_screen.dart';
-import 'package:flutter_toybox/screens/mark_down/mark_down_screen.dart';
-import 'package:flutter_toybox/screens/multiple_audio_play/multiple_audio_screen.dart';
-import 'package:flutter_toybox/screens/volume_control/volume_control_screen.dart';
+import 'package:flutter_toybox/features/background_play/background_play_screen.dart';
+import 'package:flutter_toybox/features/google_map/google_map_screen.dart';
+import 'package:flutter_toybox/features/just_audio/just_audio_screen.dart';
+import 'package:flutter_toybox/features/mark_down/mark_down_screen.dart';
+import 'package:flutter_toybox/features/multiple_audio_play/multiple_audio_screen.dart';
+import 'package:flutter_toybox/features/volume_control/volume_control_screen.dart';
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({super.key});
