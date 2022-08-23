@@ -1,11 +1,12 @@
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_toybox/screens/just_audio/just_audio_screen_controller.dart';
-import 'package:flutter_toybox/widgets/app_scaffold.dart';
 import 'package:provider/provider.dart';
 
+import '../../widgets/app_scaffold.dart';
+import 'just_audio_screen_controller.dart';
+
 class JustAudioScreen extends StatelessWidget {
-  const JustAudioScreen({Key key}) : super(key: key);
+  const JustAudioScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class JustAudioScreen extends StatelessWidget {
 }
 
 class _JustAudioScreen extends StatelessWidget {
-  const _JustAudioScreen({Key key}) : super(key: key);
+  const _JustAudioScreen();
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +29,9 @@ class _JustAudioScreen extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             colors: [
-              Colors.red[600],
-              Colors.red[400],
-              Colors.red[200],
+              Colors.red[600]!,
+              Colors.red[400]!,
+              Colors.red[200]!,
             ],
           ),
         ),

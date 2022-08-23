@@ -13,11 +13,11 @@ class VolumeControlState extends ChangeNotifier {
     total: Duration.zero,
   );
   AudioState audioState = AudioState.paused;
-  AnimationController volumeControl;
+  late AnimationController volumeControl;
 
   AudioServiceHandler _handler = getIt<AudioServiceHandler>();
-  StreamSubscription _playbackSubscription;
-  StreamSubscription _progressBarSubscription;
+  late StreamSubscription _playbackSubscription;
+  late StreamSubscription _progressBarSubscription;
 
   // for test
   static final _item = MediaItem(
@@ -64,7 +64,7 @@ class VolumeControlState extends ChangeNotifier {
       // _handler.mediaItem
       // (Duration current, PlaybackState state, MediaItem mediaItem) =>
       _handler.player.durationStream,
-      (Duration current, PlaybackState state, Duration total) =>
+      (Duration current, PlaybackState state, Duration? total) =>
           ProgressBarState(
         current: current,
         buffered: state.bufferedPosition,
@@ -75,7 +75,8 @@ class VolumeControlState extends ChangeNotifier {
   }
 
   Future<void> _listenToVolumeControl(TickerProvider provider) async {
-    final Duration duration = await _handler.player.durationStream.first;
+    final Duration duration =
+        await _handler.player.durationStream.first ?? Duration.zero;
     volumeControl = AnimationController(vsync: provider, duration: duration)
       ..addListener(() => _handler.setVolume(1 - volumeControl.value));
     notifyListeners();
@@ -139,7 +140,7 @@ class VolumeControlState extends ChangeNotifier {
   void seek(Duration position) {
     _handler.seek(position);
     final double current =
-        position.inMicroseconds / progressBarState.total.inMicroseconds;
+        position.inMicroseconds / progressBarState.total!.inMicroseconds;
     volumeControl.value = current;
     notifyListeners();
   }
@@ -149,14 +150,14 @@ class VolumeControlState extends ChangeNotifier {
 
 class ProgressBarState {
   ProgressBarState({
-    this.current,
-    this.buffered,
-    this.total,
+    required this.current,
+    required this.buffered,
+    required this.total,
   });
 
   final Duration current;
   final Duration buffered;
-  final Duration total;
+  final Duration? total;
 }
 
 enum AudioState {

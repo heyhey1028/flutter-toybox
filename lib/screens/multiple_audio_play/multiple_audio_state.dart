@@ -13,10 +13,10 @@ class MultipleAudioState extends ChangeNotifier {
     total: Duration.zero,
   );
   AudioState audioState = AudioState.paused;
-  AnimationController volumeControl;
-  StreamSubscription _playbackSubscription;
-  StreamSubscription _progressBarSubscription;
-  StreamSubscription _volumeSubscription;
+  late AnimationController volumeControl;
+  late StreamSubscription _playbackSubscription;
+  late StreamSubscription _progressBarSubscription;
+  late StreamSubscription _volumeSubscription;
   double volumeFactor = 1;
 
   AudioServiceHandler _handler = getIt<AudioServiceHandler>();
@@ -87,7 +87,7 @@ class MultipleAudioState extends ChangeNotifier {
       // _handler.mediaItem
       // (Duration current, PlaybackState state, MediaItem mediaItem) =>
       _handler.player.durationStream,
-      (Duration current, PlaybackState state, Duration total) =>
+      (Duration current, PlaybackState state, Duration? total) =>
           ProgressBarState(
         current: current,
         buffered: state.bufferedPosition,
@@ -98,7 +98,8 @@ class MultipleAudioState extends ChangeNotifier {
   }
 
   Future<void> _listenToVolumeControl(TickerProvider provider) async {
-    final Duration duration = await _handler.player.durationStream.first;
+    final Duration duration =
+        await _handler.player.durationStream.first ?? Duration.zero;
     volumeControl = AnimationController(vsync: provider, duration: duration)
       ..addListener(() => _handler.setVolume(1 - volumeControl.value));
     notifyListeners();
@@ -107,8 +108,8 @@ class MultipleAudioState extends ChangeNotifier {
   void _listenVolume() {
     _volumeSubscription = _handler.player.volumeStream.listen((double p0) {
       volumeFactor = p0;
-      double currentVol1 = _handler.subPlayer1?.volume;
-      double currentVol2 = _handler.subPlayer2?.volume;
+      double currentVol1 = _handler.subPlayer1.volume;
+      double currentVol2 = _handler.subPlayer2.volume;
       if (currentVol1 != null) _handler.setVolume1(sliderValue1 * p0);
       if (currentVol2 != null) _handler.setVolume2(sliderValue2 * p0);
     });
@@ -197,7 +198,7 @@ class MultipleAudioState extends ChangeNotifier {
   void seek(Duration position) {
     _handler.seek(position);
     final double current =
-        position.inMicroseconds / progressBarState.total.inMicroseconds;
+        position.inMicroseconds / progressBarState.total!.inMicroseconds;
     volumeControl.value = current;
     notifyListeners();
   }
@@ -207,14 +208,14 @@ class MultipleAudioState extends ChangeNotifier {
 
 class ProgressBarState {
   ProgressBarState({
-    this.current,
-    this.buffered,
-    this.total,
+    required this.current,
+    required this.buffered,
+    required this.total,
   });
 
   final Duration current;
   final Duration buffered;
-  final Duration total;
+  final Duration? total;
 }
 
 enum AudioState {

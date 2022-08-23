@@ -8,9 +8,9 @@ class AppScaffold extends StatelessWidget {
     this.title,
   });
 
-  final Widget body;
-  final Widget floatingActionButton;
-  final Widget title;
+  final Widget? body;
+  final Widget? floatingActionButton;
+  final Widget? title;
   final _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
@@ -24,7 +24,7 @@ class AppScaffold extends StatelessWidget {
         iconTheme: IconThemeData(color: Colors.white),
         leading: IconButton(
           icon: Icon(Icons.menu, size: 40), // change this size and style
-          onPressed: () => _scaffoldKey.currentState.openDrawer(),
+          onPressed: () => _scaffoldKey.currentState?.openDrawer(),
         ),
       ),
       drawer: MainDrawer(),

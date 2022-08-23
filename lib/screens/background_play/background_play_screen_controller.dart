@@ -2,9 +2,10 @@ import 'dart:async';
 
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_toybox/screens/background_play/audio_handler.dart';
-import 'package:flutter_toybox/screens/services/service_locator.dart';
 import 'package:rxdart/rxdart.dart';
+
+import '../services/service_locator.dart';
+import 'audio_handler.dart';
 
 class BackgroundPlayController extends ChangeNotifier {
   ProgressBarState progressBarState = ProgressBarState(
@@ -13,8 +14,8 @@ class BackgroundPlayController extends ChangeNotifier {
     total: Duration.zero,
   );
   AudioState audioState = AudioState.paused;
-  StreamSubscription _playbackSubscription;
-  StreamSubscription _progressBarSubscription;
+  late StreamSubscription _playbackSubscription;
+  late StreamSubscription _progressBarSubscription;
 
   AudioServiceHandler _handler = getIt<AudioServiceHandler>();
 
@@ -65,7 +66,7 @@ class BackgroundPlayController extends ChangeNotifier {
       // _handler.mediaItem
       // (Duration current, PlaybackState state, MediaItem mediaItem) =>
       _handler.player.durationStream,
-      (Duration current, PlaybackState state, Duration total) =>
+      (Duration current, PlaybackState state, Duration? total) =>
           ProgressBarState(
         current: current,
         buffered: state.bufferedPosition,
@@ -130,9 +131,9 @@ class BackgroundPlayController extends ChangeNotifier {
 
 class ProgressBarState {
   ProgressBarState({
-    this.current,
-    this.buffered,
-    this.total,
+    required this.current,
+    required this.buffered,
+    required this.total,
   });
 
   final Duration current;
