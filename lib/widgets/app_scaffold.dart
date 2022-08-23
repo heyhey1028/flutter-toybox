@@ -3,14 +3,16 @@ import 'main_drawer.dart';
 
 class AppScaffold extends StatelessWidget {
   AppScaffold({
-    this.body,
+    required this.body,
     this.floatingActionButton,
     this.title,
+    this.color = Colors.blue,
   });
 
-  final Widget? body;
+  final Widget body;
   final Widget? floatingActionButton;
   final Widget? title;
+  final MaterialColor color;
   final _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
@@ -29,7 +31,19 @@ class AppScaffold extends StatelessWidget {
       ),
       drawer: MainDrawer(),
       extendBodyBehindAppBar: true,
-      body: body,
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            colors: [
+              color[600]!,
+              color[400]!,
+              color[200]!,
+            ],
+          ),
+        ),
+        child: body,
+      ),
       floatingActionButton: floatingActionButton,
     );
   }

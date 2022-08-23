@@ -16,43 +16,30 @@ class DocumentListScreen extends StatelessWidget {
         textAlign: TextAlign.center,
         style: TextStyle(color: Colors.white),
       ),
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            colors: [
-              Colors.indigo[600]!,
-              Colors.indigo[400]!,
-              Colors.indigo[200]!,
-            ],
-          ),
-        ),
-        child: StreamBuilder<List<Document>>(
-          stream: DocumentRepositoryImpl().getDocuments(),
-          builder: (context, AsyncSnapshot<List<Document>> snapshots) {
-            if (snapshots.hasData) {
-              return ListView.builder(
-                physics: const BouncingScrollPhysics(
-                    parent: AlwaysScrollableScrollPhysics()),
-                itemCount: snapshots.data!.length,
-                itemBuilder: (context, index) {
-                  return DocumentCard(
-                    document: snapshots.data![index],
-                    title: snapshots.data![index].title,
-                    onTap: () => onTapCard(context, snapshots.data![index]),
-                  );
-                },
-              );
-            }
+      color: Colors.indigo,
+      body: StreamBuilder<List<Document>>(
+        stream: DocumentRepositoryImpl().getDocuments(),
+        builder: (context, AsyncSnapshot<List<Document>> snapshots) {
+          if (snapshots.hasData) {
+            return ListView.builder(
+              physics: const BouncingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics()),
+              itemCount: snapshots.data!.length,
+              itemBuilder: (context, index) {
+                return DocumentCard(
+                  document: snapshots.data![index],
+                  title: snapshots.data![index].title,
+                  onTap: () => onTapCard(context, snapshots.data![index]),
+                );
+              },
+            );
+          }
 
-            if (snapshots.hasError) {
-              return Text(snapshots.error.toString());
-            }
-            return CircularProgressIndicator();
-          },
-        ),
+          if (snapshots.hasError) {
+            return Text(snapshots.error.toString());
+          }
+          return CircularProgressIndicator();
+        },
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color(0xff03dac6),

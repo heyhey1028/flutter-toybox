@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_toybox/main.dart';
+import 'package:flutter_toybox/screens/animation_playground/animation_playground_screen.dart';
 import 'package:flutter_toybox/screens/background_play/background_play_screen.dart';
 import 'package:flutter_toybox/screens/just_audio/just_audio_screen.dart';
 import 'package:flutter_toybox/screens/mark_down/mark_down_screen.dart';
@@ -72,7 +73,7 @@ class MainDrawer extends StatelessWidget {
               color: Colors.yellow[100]!,
               icon: Icon(Icons.animation),
               title: 'ANIMATION PLAYGROUND',
-              navigateTo: null,
+              navigateTo: AnimationPlaygroundScreen(),
             ),
           ],
         ),
