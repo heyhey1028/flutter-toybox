@@ -5,7 +5,7 @@ import 'package:flutter_toybox/widgets/app_scaffold.dart';
 import 'package:provider/provider.dart';
 
 class VolumeControlScreen extends StatelessWidget {
-  const VolumeControlScreen({Key key}) : super(key: key);
+  const VolumeControlScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class VolumeControlScreen extends StatelessWidget {
 }
 
 class _VolumeControlScreen extends StatefulWidget {
-  const _VolumeControlScreen({Key key}) : super(key: key);
+  const _VolumeControlScreen({super.key});
 
   @override
   State<_VolumeControlScreen> createState() => _VolumeControlScreenState();
@@ -40,9 +40,9 @@ class _VolumeControlScreenState extends State<_VolumeControlScreen>
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             colors: [
-              Colors.green[600],
-              Colors.green[400],
-              Colors.green[200],
+              Colors.green[600]!,
+              Colors.green[400]!,
+              Colors.green[200]!,
             ],
           ),
         ),
@@ -58,7 +58,7 @@ class _VolumeControlScreenState extends State<_VolumeControlScreen>
                     ProgressBar(
                   progress: state.current,
                   buffered: state.buffered,
-                  total: state.total,
+                  total: state.total!,
                   onSeek: (Duration position) =>
                       context.read<VolumeControlState>().seek(position),
                 ),

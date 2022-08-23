@@ -5,7 +5,7 @@ import 'package:flutter_toybox/widgets/app_scaffold.dart';
 import 'package:provider/provider.dart';
 
 class BackgroundPlayScreen extends StatelessWidget {
-  const BackgroundPlayScreen({Key key}) : super(key: key);
+  const BackgroundPlayScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class BackgroundPlayScreen extends StatelessWidget {
 }
 
 class _BackgroundPlayScreen extends StatelessWidget {
-  const _BackgroundPlayScreen({Key key}) : super(key: key);
+  const _BackgroundPlayScreen();
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +28,9 @@ class _BackgroundPlayScreen extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             colors: [
-              Colors.orange[600],
-              Colors.orange[400],
-              Colors.orange[200],
+              Colors.orange[600]!,
+              Colors.orange[400]!,
+              Colors.orange[200]!,
             ],
           ),
         ),

@@ -16,8 +16,8 @@ Future<AudioServiceHandler> initeAudioService() async {
 
 class AudioServiceHandler extends BaseAudioHandler {
   final AudioPlayer player = AudioPlayer();
-  AudioPlayer subPlayer1;
-  AudioPlayer subPlayer2;
+  late AudioPlayer subPlayer1;
+  late AudioPlayer subPlayer2;
 
   Future<void> initPlayer(MediaItem item) async {
     try {
@@ -50,7 +50,7 @@ class AudioServiceHandler extends BaseAudioHandler {
           ProcessingState.buffering: AudioProcessingState.buffering,
           ProcessingState.ready: AudioProcessingState.ready,
           ProcessingState.completed: AudioProcessingState.completed,
-        }[player.processingState],
+        }[player.processingState]!,
         playing: playing,
         updatePosition: player.position,
         bufferedPosition: player.bufferedPosition,
@@ -64,10 +64,10 @@ class AudioServiceHandler extends BaseAudioHandler {
   @override
   Future<void> play() async {
     player.play();
-    if (subPlayer1?.audioSource != null) {
+    if (subPlayer1.audioSource != null) {
       subPlayer1.play();
     }
-    if (subPlayer2?.audioSource != null) {
+    if (subPlayer2.audioSource != null) {
       subPlayer2.play();
     }
   }
@@ -75,10 +75,10 @@ class AudioServiceHandler extends BaseAudioHandler {
   @override
   Future<void> pause() async {
     player.pause();
-    if (subPlayer1?.audioSource != null) {
+    if (subPlayer1.audioSource != null) {
       subPlayer1.pause();
     }
-    if (subPlayer2?.audioSource != null) {
+    if (subPlayer2.audioSource != null) {
       subPlayer2.pause();
     }
   }
@@ -93,8 +93,8 @@ class AudioServiceHandler extends BaseAudioHandler {
   }
 
   void dispose() {
-    subPlayer1?.dispose();
-    subPlayer2?.dispose();
+    subPlayer1.dispose();
+    subPlayer2.dispose();
   }
 
 /* --- SUB AUDIO CONTROL --- */
@@ -114,11 +114,11 @@ class AudioServiceHandler extends BaseAudioHandler {
   }
 
   void setVolume1(double value) {
-    subPlayer1?.setVolume(value);
+    subPlayer1.setVolume(value);
   }
 
   void setVolume2(double value) {
-    subPlayer2?.setVolume(value);
+    subPlayer2.setVolume(value);
   }
 
   /* --- Volume Control --- */

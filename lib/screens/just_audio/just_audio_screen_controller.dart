@@ -1,18 +1,19 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:rxdart/rxdart.dart';
 
 class JustAudioScreenState extends ChangeNotifier {
-  AudioPlayer _audioPlayer;
+  late AudioPlayer _audioPlayer;
   ProgressBarState progressBarState = ProgressBarState(
     current: Duration.zero,
     buffered: Duration.zero,
     total: Duration.zero,
   );
   AudioState audioState = AudioState.paused;
-  StreamSubscription _playbackSubscription;
-  StreamSubscription _progressBarSubscription;
+  late StreamSubscription _playbackSubscription;
+  late StreamSubscription _progressBarSubscription;
 
   static final _url =
       'https://firebasestorage.googleapis.com/v0/b/flutter-toybox.appspot.com/o/audios%2Fmusic_box.mp3?alt=media&token=cf88a17e-bbe9-46de-95a8-e855a23fbb3b';
@@ -51,7 +52,7 @@ class JustAudioScreenState extends ChangeNotifier {
       _audioPlayer.positionStream,
       _audioPlayer.bufferedPositionStream,
       _audioPlayer.durationStream,
-      (Duration current, Duration buffer, Duration total) => ProgressBarState(
+      (Duration current, Duration buffer, Duration? total) => ProgressBarState(
         current: current,
         buffered: buffer,
         total: total ?? Duration.zero,
@@ -112,9 +113,9 @@ class JustAudioScreenState extends ChangeNotifier {
 
 class ProgressBarState {
   ProgressBarState({
-    this.current,
-    this.buffered,
-    this.total,
+    required this.current,
+    required this.buffered,
+    required this.total,
   });
 
   final Duration current;
