@@ -1,0 +1,1 @@
+Hello square_sample!
