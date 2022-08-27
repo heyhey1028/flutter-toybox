@@ -48,7 +48,8 @@ class MyHomePage extends StatelessWidget {
                   ],
                 ),
               ),
-              child: const Center(child: Text('Welcome to square_sample')),
+              child:
+                  const Center(child: Text('Welcome to Animation Playground')),
             ),
           ),
         ],
