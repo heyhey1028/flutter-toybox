@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../features/sample/sample_screen.dart';
+import '../features/basic_animation/basic_anim_screen.dart';
 import '../main.dart';
 
 class MainDrawer extends StatelessWidget {
@@ -39,7 +39,7 @@ class MainDrawer extends StatelessWidget {
               color: Colors.indigo[100]!,
               icon: const Icon(Icons.notes),
               title: 'SAMPLE',
-              navigateTo: const AnimationPlaygroundScreen(),
+              navigateTo: const BasicAnimationScreen(),
             ),
           ],
         ),
