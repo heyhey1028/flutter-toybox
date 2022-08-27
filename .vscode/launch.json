@@ -8,6 +8,13 @@
         "type": "dart",
         "args": ["-v","--debug"]
       },
+      {
+        "name": "Debug Animation Playground",
+        "program": "samples/animation_playground/lib/main.dart",
+        "request": "launch",
+        "type": "dart",
+        "args": ["-v","--debug"]
+      },
     ]
   }
   
