@@ -27,7 +27,7 @@ class _BasicWithAnimatedWidgetState extends State<BasicWithAnimatedWidget>
       duration: const Duration(milliseconds: 500),
     );
     // 4. prepare Tween
-    _tween = Tween<Offset>(begin: const Offset(0, -1000), end: Offset.zero);
+    _tween = Tween<Offset>(begin: const Offset(-1000, 0), end: Offset.zero);
     // 5. create Animation by AnimationController x Tween
     _animation = _controller.drive(_tween);
     super.initState();
@@ -43,21 +43,7 @@ class _BasicWithAnimatedWidgetState extends State<BasicWithAnimatedWidget>
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        AnimatedBuilder(
-          animation: _animation,
-          builder: (context, _) {
-            return Center(
-              child: Transform.translate(
-                offset: _animation.value,
-                child: Image.asset(
-                  'assets/images/dash_bird_pc.png',
-                  width: 200,
-                  height: 200,
-                ),
-              ),
-            );
-          },
-        ),
+        AnimatedDashBird(animation: _animation),
         Align(
           alignment: Alignment.bottomCenter,
           child: Padding(
@@ -98,5 +84,28 @@ class _BasicWithAnimatedWidgetState extends State<BasicWithAnimatedWidget>
     }
     controller.forward();
     setState(() => hasAppeared = true);
+  }
+}
+
+class AnimatedDashBird extends AnimatedWidget {
+  const AnimatedDashBird({
+    super.key,
+    required Animation<Offset> animation,
+  }) : super(listenable: animation);
+
+  Animation<Offset> get _offset => listenable as Animation<Offset>;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Transform.translate(
+        offset: _offset.value,
+        child: Image.asset(
+          'assets/images/dash_bird_pc.png',
+          width: 200,
+          height: 200,
+        ),
+      ),
+    );
   }
 }
