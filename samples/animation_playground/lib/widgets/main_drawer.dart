@@ -17,7 +17,7 @@ class MainDrawer extends StatelessWidget {
               child: Column(
                 children: [
                   CircleAvatar(
-                    backgroundColor: Colors.grey[100]!,
+                    backgroundColor: Colors.grey[100],
                     foregroundImage:
                         const AssetImage('assets/images/flutter_logo.png'),
                     radius: 50,
@@ -30,13 +30,13 @@ class MainDrawer extends StatelessWidget {
               ),
             ),
             DrawerTile(
-              color: Colors.lightBlue[100]!,
+              color: Colors.lightBlue[100],
               icon: const Icon(Icons.home),
               title: 'HOME',
               navigateTo: const MyHomePage(),
             ),
             DrawerTile(
-              color: Colors.indigo[100]!,
+              color: Colors.indigo[100],
               icon: const Icon(Icons.notes),
               title: 'BASIC',
               navigateTo: const BasicAnimationScreen(),

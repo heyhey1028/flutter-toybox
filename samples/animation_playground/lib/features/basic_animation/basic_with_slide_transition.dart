@@ -27,7 +27,7 @@ class _BasicWithSlideTransitionState extends State<BasicWithSlideTransition>
       duration: const Duration(milliseconds: 500),
     );
     // 4. prepare Tween
-    _tween = Tween<Offset>(begin: const Offset(0, -1000), end: Offset.zero);
+    _tween = Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero);
     // 5. create Animation by AnimationController x Tween
     _animation = _controller.drive(_tween);
     super.initState();
@@ -43,20 +43,15 @@ class _BasicWithSlideTransitionState extends State<BasicWithSlideTransition>
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        AnimatedBuilder(
-          animation: _animation,
-          builder: (context, _) {
-            return Center(
-              child: Transform.translate(
-                offset: _animation.value,
-                child: Image.asset(
-                  'assets/images/dash_bird_pc.png',
-                  width: 200,
-                  height: 200,
-                ),
-              ),
-            );
-          },
+        SlideTransition(
+          position: _animation,
+          child: Center(
+            child: Image.asset(
+              'assets/images/dash_bird_pc.png',
+              width: 200,
+              height: 200,
+            ),
+          ),
         ),
         Align(
           alignment: Alignment.bottomCenter,
