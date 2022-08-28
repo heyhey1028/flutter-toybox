@@ -1,97 +1,52 @@
-import 'package:animation_playground/widgets/base_button.dart';
+import 'package:animation_playground/features/basic_animation/basic_with_animated_widget.dart';
+import 'package:animation_playground/features/basic_animation/basic_with_animation_builder.dart';
+import 'package:animation_playground/features/basic_animation/basic_with_slide_transition.dart';
 import 'package:animation_playground/widgets/bordered_text.dart';
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '/widgets/app_scaffold.dart';
 
-class BasicAnimationScreen extends StatefulWidget {
+final pageProvider = StateProvider((ref) => 0.0);
+
+class BasicAnimationScreen extends HookConsumerWidget {
   const BasicAnimationScreen({super.key});
 
   @override
-  State<BasicAnimationScreen> createState() => _BasicAnimationScreenState();
-}
-
-// 1. define StatefulWidget with SingleTickerProviderStateMixin
-class _BasicAnimationScreenState extends State<BasicAnimationScreen>
-    with SingleTickerProviderStateMixin {
-  // 2. define AnimationController & Tween & Animation
-  late AnimationController _controller;
-  late Tween<Offset> _tween;
-  late Animation<Offset> _animation;
-
-  bool hasAppeared = false;
-
-  @override
-  void initState() {
-    // 3. initialize controller
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 500),
-    );
-    // 4. prepare Tween
-    _tween = Tween<Offset>(begin: const Offset(0, -1000), end: Offset.zero);
-    // 5. create Animation by AnimationController x Tween
-    _animation = _controller.drive(_tween);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final controller = usePageController();
     return AppScaffold(
-      title: const BorderedText(
-        text: 'BASIC',
-        textColor: Colors.white,
-        borderColor: Colors.blue,
-        fontSize: 24,
-        strokeWidth: 5,
-      ),
-      color: Colors.yellow,
-      body: Stack(
+      title: Column(
         children: [
-          AnimatedBuilder(
-            animation: _animation,
-            builder: (context, _) {
-              return Center(
-                child: Transform.translate(
-                  offset: _animation.value,
-                  child: Image.asset(
-                    'assets/images/dash_bird_pc.png',
-                    width: 200,
-                    height: 200,
-                  ),
-                ),
-              );
-            },
+          const BorderedText(
+            text: 'BASIC',
+            textColor: Colors.white,
+            borderColor: Colors.blue,
+            fontSize: 24,
+            strokeWidth: 5,
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 60),
-              child: BaseButton(
-                onPressed: () => _onPressed(_controller),
-                text: !hasAppeared ? 'FORWARD' : 'BACKWARD',
-              ),
+          const SizedBox(height: 4),
+          Consumer(
+            builder: (context, ref, _) => DotsIndicator(
+              dotsCount: 3,
+              position: ref.watch(pageProvider),
             ),
           ),
         ],
       ),
+      color: Colors.yellow,
+      body: PageView(
+        controller: controller,
+        onPageChanged: (value) => ref.read(pageProvider.notifier).update(
+              (state) => value.toDouble(),
+            ),
+        children: const [
+          BasicWithAnimBuilder(),
+          BasicWithAnimatedWidget(),
+          BasicWithSlideTransition(),
+        ],
+      ),
     );
-  }
-
-  void _onPressed(
-    AnimationController controller,
-  ) {
-    if (controller.status == AnimationStatus.completed) {
-      controller.reverse();
-      setState(() => hasAppeared = false);
-      return;
-    }
-    controller.forward();
-    setState(() => hasAppeared = true);
   }
 }

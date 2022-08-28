@@ -38,7 +38,7 @@ class MainDrawer extends StatelessWidget {
             DrawerTile(
               color: Colors.indigo[100]!,
               icon: const Icon(Icons.notes),
-              title: 'SAMPLE',
+              title: 'BASIC',
               navigateTo: const BasicAnimationScreen(),
             ),
           ],
