@@ -1,3 +1,4 @@
+import 'package:animation_playground/features/multiple_effects/multiple_effects_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../features/basic_animation/basic_anim_screen.dart';
@@ -36,10 +37,16 @@ class MainDrawer extends StatelessWidget {
               navigateTo: const MyHomePage(),
             ),
             DrawerTile(
-              color: Colors.indigo[100],
-              icon: const Icon(Icons.notes),
+              color: Colors.yellow[100],
+              icon: const Icon(Icons.start),
               title: 'BASIC',
               navigateTo: const BasicAnimationScreen(),
+            ),
+            DrawerTile(
+              color: Colors.orange[100],
+              icon: const Icon(Icons.multiple_stop),
+              title: 'MULTIPLE EFFECTS',
+              navigateTo: const MultipleEffectsScreen(),
             ),
           ],
         ),
