@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:animation_playground/widgets/base_button.dart';
 import 'package:flutter/material.dart';
 
@@ -14,8 +16,10 @@ class _MultipleWithAnimatedWidgetState extends State<MultipleWithAnimatedWidget>
     with SingleTickerProviderStateMixin {
   // 2. define AnimationController & Tween & Animation
   late AnimationController _controller;
-  late Tween<Offset> _tween;
-  late Animation<Offset> _animation;
+  late Tween<double> _opacityTween;
+  late Animation<double> _opacityAnimation;
+  late Tween<double> _rotateTween;
+  late Animation<double> _rotateAnimation;
 
   bool hasAppeared = false;
 
@@ -27,9 +31,11 @@ class _MultipleWithAnimatedWidgetState extends State<MultipleWithAnimatedWidget>
       duration: const Duration(milliseconds: 500),
     );
     // 4. prepare Tween
-    _tween = Tween<Offset>(begin: const Offset(-1000, 0), end: Offset.zero);
+    _opacityTween = Tween<double>(begin: 0, end: 1);
+    _rotateTween = Tween<double>(begin: 0, end: 8 * pi);
     // 5. create Animation by AnimationController x Tween
-    _animation = _controller.drive(_tween);
+    _opacityAnimation = _controller.drive(_opacityTween);
+    _rotateAnimation = _controller.drive(_rotateTween);
     super.initState();
   }
 
@@ -43,7 +49,10 @@ class _MultipleWithAnimatedWidgetState extends State<MultipleWithAnimatedWidget>
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        AnimatedDashBird(animation: _animation),
+        AnimatedDashBird(
+          opacityAnimation: _opacityAnimation,
+          rotateAnimation: _rotateAnimation,
+        ),
         Align(
           alignment: Alignment.bottomCenter,
           child: Padding(
@@ -88,22 +97,36 @@ class _MultipleWithAnimatedWidgetState extends State<MultipleWithAnimatedWidget>
 }
 
 class AnimatedDashBird extends AnimatedWidget {
-  const AnimatedDashBird({
+  AnimatedDashBird({
     super.key,
-    required Animation<Offset> animation,
-  }) : super(listenable: animation);
+    required Animation<double> opacityAnimation,
+    required Animation<double> rotateAnimation,
+  })  : _opacityAnimation = opacityAnimation,
+        _rotateAnimation = rotateAnimation,
+        super(
+          listenable: Listenable.merge(
+            [
+              opacityAnimation,
+              rotateAnimation,
+            ],
+          ),
+        );
 
-  Animation<Offset> get _offset => listenable as Animation<Offset>;
+  final Animation<double> _opacityAnimation;
+  final Animation<double> _rotateAnimation;
 
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Transform.translate(
-        offset: _offset.value,
-        child: Image.asset(
-          'assets/images/dash_bird_power.png',
-          width: 200,
-          height: 200,
+      child: Opacity(
+        opacity: _opacityAnimation.value,
+        child: Transform.rotate(
+          angle: _rotateAnimation.value,
+          child: Image.asset(
+            'assets/images/dash_bird_power.png',
+            width: 400,
+            height: 400,
+          ),
         ),
       ),
     );
