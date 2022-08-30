@@ -33,7 +33,7 @@ class MainDrawer extends StatelessWidget {
               color: Colors.lightBlue[100]!,
               icon: const Icon(Icons.home),
               title: 'HOME',
-              navigateTo: MyHomePage(),
+              navigateTo: const MyHomePage(),
             ),
             DrawerTile(
               color: Colors.indigo[100]!,
@@ -79,7 +79,7 @@ class DrawerTile extends StatelessWidget {
           Navigator.of(context).pop();
           Navigator.of(context).pushReplacement<void, void>(
             MaterialPageRoute(
-              builder: (_) => navigateTo ?? MyHomePage(),
+              builder: (_) => navigateTo ?? const MyHomePage(),
             ),
           );
         },
