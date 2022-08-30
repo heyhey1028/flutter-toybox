@@ -8,6 +8,13 @@
         "type": "dart",
         "args": ["-v","--debug"]
       },
+      {
+        "name": "Debug Square sample",
+        "program": "samples/square_sample/lib/main.dart",
+        "request": "launch",
+        "type": "dart",
+        "args": ["-v","--debug"]
+      },
     ]
   }
   
