@@ -3,6 +3,7 @@ import 'package:animation_playground/features/basic_animation/basic_with_animati
 import 'package:animation_playground/features/basic_animation/basic_with_slide_transition.dart';
 import 'package:animation_playground/features/multiple_effects/multiple_with_animated_widget.dart';
 import 'package:animation_playground/features/multiple_effects/multiple_with_animation_builder.dart';
+import 'package:animation_playground/features/multiple_effects/multiple_with_transition.dart';
 import 'package:animation_playground/widgets/bordered_text.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +47,7 @@ class MultipleEffectsScreen extends HookConsumerWidget {
         children: const [
           MultipleWithAnimBuilder(),
           MultipleWithAnimatedWidget(),
-          BasicWithSlideTransition(),
+          MultipleWithTransition(),
         ],
       ),
     );
