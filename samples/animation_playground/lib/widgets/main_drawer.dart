@@ -1,3 +1,4 @@
+import 'package:animation_playground/features/chain_animation/chain_animation_screen.dart';
 import 'package:animation_playground/features/multiple_effects/multiple_effects_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -47,6 +48,12 @@ class MainDrawer extends StatelessWidget {
               icon: const Icon(Icons.multiple_stop),
               title: 'MULTIPLE EFFECTS',
               navigateTo: const MultipleEffectsScreen(),
+            ),
+            DrawerTile(
+              color: Colors.pink[100],
+              icon: const Icon(Icons.bubble_chart),
+              title: 'CHAIN ANIMATION',
+              navigateTo: const ChainAnimationScreen(),
             ),
           ],
         ),
