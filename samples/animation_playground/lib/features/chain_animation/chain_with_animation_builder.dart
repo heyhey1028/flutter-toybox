@@ -13,10 +13,8 @@ class _ChainWithAnimBuilderState extends State<ChainWithAnimBuilder>
     with SingleTickerProviderStateMixin {
   // 2. define AnimationController & Tween & Animation
   late AnimationController _controller;
-  late Tween<Offset> _offsetTween;
-  late Tween<double> _opacityTween;
-  late Animation<Offset> _offsetAnimation;
-  late Animation<double> _opacityAnimation;
+  late TweenSequence<Alignment> _tween;
+  late Animation<Alignment> _alignAnimation;
 
   bool hasAppeared = false;
 
@@ -25,15 +23,76 @@ class _ChainWithAnimBuilderState extends State<ChainWithAnimBuilder>
     // 3. initialize controller
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 600),
+      duration: const Duration(milliseconds: 1500),
     );
-    // 4. prepare Tween
-    _offsetTween =
-        Tween<Offset>(begin: const Offset(0, -300), end: Offset.zero);
-    _opacityTween = Tween(begin: 0, end: 1);
+    // 4. prepare TweenSequence
+    _tween = TweenSequence<Alignment>(
+      [
+        TweenSequenceItem(
+          tween: Tween(
+            begin: const Alignment(-1, 3),
+            end: Alignment.topLeft,
+          ).chain(
+            CurveTween(curve: Curves.fastLinearToSlowEaseIn),
+          ),
+          weight: 2,
+        ),
+        TweenSequenceItem(
+          tween: ConstantTween(Alignment.topLeft),
+          weight: 1,
+        ),
+        TweenSequenceItem(
+          tween: Tween(
+            begin: Alignment.topLeft,
+            end: Alignment.topRight,
+          ),
+          weight: 1,
+        ),
+        TweenSequenceItem(
+          tween: Tween(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+          ),
+          weight: 1,
+        ),
+        TweenSequenceItem(
+          tween: Tween(
+            begin: Alignment.bottomLeft,
+            end: Alignment.bottomRight,
+          ),
+          weight: 1,
+        ),
+        TweenSequenceItem(
+          tween: Tween(
+            begin: Alignment.bottomRight,
+            end: Alignment.topLeft,
+          ),
+          weight: 1,
+        ),
+        TweenSequenceItem(
+          tween: Tween(
+            begin: Alignment.topLeft,
+            end: Alignment.topRight,
+          ),
+          weight: 1,
+        ),
+        TweenSequenceItem(
+          tween: ConstantTween(Alignment.topRight),
+          weight: 0.5,
+        ),
+        TweenSequenceItem(
+          tween: Tween(
+            begin: Alignment.topRight,
+            end: Alignment.center,
+          ).chain(
+            CurveTween(curve: Curves.easeIn),
+          ),
+          weight: 2.5,
+        ),
+      ],
+    );
     // 5. create Animation by AnimationController x Tween
-    _offsetAnimation = _controller.drive(_offsetTween);
-    _opacityAnimation = _controller.drive(_opacityTween);
+    _alignAnimation = _controller.drive(_tween);
     super.initState();
   }
 
@@ -49,22 +108,14 @@ class _ChainWithAnimBuilderState extends State<ChainWithAnimBuilder>
       children: [
         AnimatedBuilder(
           // 6. merging animations to be apply multiple effects to within AnimatedBuilder
-          animation: Listenable.merge([
-            _offsetAnimation,
-            _opacityAnimation,
-          ]),
+          animation: _alignAnimation,
           builder: (context, _) {
-            return Center(
-              child: Opacity(
-                opacity: _opacityAnimation.value,
-                child: Transform.translate(
-                  offset: _offsetAnimation.value,
-                  child: Image.asset(
-                    'assets/images/dash_bird_power.png',
-                    width: 400,
-                    height: 400,
-                  ),
-                ),
+            return Align(
+              alignment: _alignAnimation.value,
+              child: Image.asset(
+                'assets/images/dash_bird_pencil.png',
+                width: 200,
+                height: 200,
               ),
             );
           },
