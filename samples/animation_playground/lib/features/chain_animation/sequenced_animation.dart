@@ -1,15 +1,16 @@
 import 'package:animation_playground/widgets/base_button.dart';
 import 'package:flutter/material.dart';
 
-class ChainWithAnimBuilder extends StatefulWidget {
-  const ChainWithAnimBuilder({super.key});
+class SequencedAnimationSample extends StatefulWidget {
+  const SequencedAnimationSample({super.key});
 
   @override
-  State<ChainWithAnimBuilder> createState() => _ChainWithAnimBuilderState();
+  State<SequencedAnimationSample> createState() =>
+      _SequencedAnimationSampleState();
 }
 
 // 1. define StatefulWidget with SingleTickerProviderStateMixin
-class _ChainWithAnimBuilderState extends State<ChainWithAnimBuilder>
+class _SequencedAnimationSampleState extends State<SequencedAnimationSample>
     with SingleTickerProviderStateMixin {
   // 2. define AnimationController & Tween & Animation
   late AnimationController _controller;
@@ -132,7 +133,7 @@ class _ChainWithAnimBuilderState extends State<ChainWithAnimBuilder>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(
-                  'With AnimatedBuilder: ',
+                  'Sequenced animation: ',
                   style: TextStyle(
                     color: Colors.blue,
                     fontWeight: FontWeight.bold,

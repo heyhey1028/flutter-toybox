@@ -1,6 +1,3 @@
-import 'package:animation_playground/features/chain_animation/chain_multiple_effects.dart';
-import 'package:animation_playground/features/chain_animation/chain_with_animated_widget.dart';
-import 'package:animation_playground/features/chain_animation/chain_with_animation_builder.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -8,13 +5,16 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '/widgets/app_scaffold.dart';
 import '../../widgets/bordered_text.dart';
+import 'chained_animation.dart';
+import 'chained_sequenced_animation.dart';
+import 'sequenced_animation.dart';
 
 final pageProvider = StateProvider((ref) => 0.0);
 
 const pages = <Widget>[
-  ChainWithAnimBuilder(),
-  ChainWithAnimatedWidget(),
-  ChainMultipleEffects(),
+  SequencedAnimationSample(),
+  ChainedAnimationSample(),
+  ChainedSequencedAnimationSample(),
 ];
 
 class ChainAnimationScreen extends HookConsumerWidget {

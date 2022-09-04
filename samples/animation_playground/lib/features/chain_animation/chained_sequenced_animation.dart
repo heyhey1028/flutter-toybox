@@ -3,15 +3,17 @@ import 'dart:math';
 import 'package:animation_playground/widgets/base_button.dart';
 import 'package:flutter/material.dart';
 
-class ChainMultipleEffects extends StatefulWidget {
-  const ChainMultipleEffects({super.key});
+class ChainedSequencedAnimationSample extends StatefulWidget {
+  const ChainedSequencedAnimationSample({super.key});
 
   @override
-  State<ChainMultipleEffects> createState() => _ChainMultipleEffectsState();
+  State<ChainedSequencedAnimationSample> createState() =>
+      _ChainedSequencedAnimationSampleState();
 }
 
 // 1. define StatefulWidget with SingleTickerProviderStateMixin
-class _ChainMultipleEffectsState extends State<ChainMultipleEffects>
+class _ChainedSequencedAnimationSampleState
+    extends State<ChainedSequencedAnimationSample>
     with SingleTickerProviderStateMixin {
   // 2. define AnimationController & Tween & Animation
   late AnimationController _controller;
@@ -52,7 +54,7 @@ class _ChainMultipleEffectsState extends State<ChainMultipleEffects>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(
-                  'With ChainMultipleEffects: ',
+                  'Chained & sequenced animation: ',
                   style: TextStyle(
                     color: Colors.blue,
                     fontWeight: FontWeight.bold,
