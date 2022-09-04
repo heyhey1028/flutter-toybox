@@ -37,6 +37,8 @@ target 'Runner' do
   use_modular_headers!
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
+
+  pod 'SquarePointOfSaleSDK', '~> 3.5.0'
 end
 
 post_install do |installer|
@@ -44,7 +46,7 @@ post_install do |installer|
     flutter_additional_ios_build_settings(target)
     # Ref: https://stackoverflow.com/questions/61823044/flutter-the-ios-simulator-deployment-target-iphoneos-deployment-target-is-se
     target.build_configurations.each do |config|
-      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '9.0'
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '10.0'
     end
   end
 end
