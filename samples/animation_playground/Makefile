@@ -1,7 +1,7 @@
 connect_firestore:
 	flutterfire configure --project=flutter-toybox
 
-clean_pods:
+clean_sample:
 	flutter pub get
 	cd ios && rm -rf Pods
 	cd ios && rm -rf Podfile.lock

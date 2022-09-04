@@ -16,5 +16,8 @@ scripts:
 
   clean:pub:get:
     run: melos exec -- "flutter clean && flutter pub get"
+  
+  clean:samples:
+    run: melos exec -- "make clean_sample"
 
   analyze: melos exec -- dart analyze .
