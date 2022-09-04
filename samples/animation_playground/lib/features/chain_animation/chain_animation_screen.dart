@@ -1,3 +1,4 @@
+import 'package:animation_playground/features/chain_animation/chain_with_animated_widget.dart';
 import 'package:animation_playground/features/chain_animation/chain_with_animation_builder.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ final pageProvider = StateProvider((ref) => 0.0);
 
 const pages = <Widget>[
   ChainWithAnimBuilder(),
+  ChainWithAnimatedWidget(),
 ];
 
 class ChainAnimationScreen extends HookConsumerWidget {

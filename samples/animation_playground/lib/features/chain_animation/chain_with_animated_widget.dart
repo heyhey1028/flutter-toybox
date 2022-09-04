@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:animation_playground/widgets/base_button.dart';
 import 'package:flutter/material.dart';
 
@@ -14,8 +16,6 @@ class _ChainWithAnimatedWidgetState extends State<ChainWithAnimatedWidget>
     with SingleTickerProviderStateMixin {
   // 2. define AnimationController & Tween & Animation
   late AnimationController _controller;
-  late TweenSequence<Alignment> _tween;
-  late Animation<Alignment> _alignAnimation;
 
   bool hasAppeared = false;
 
@@ -26,74 +26,7 @@ class _ChainWithAnimatedWidgetState extends State<ChainWithAnimatedWidget>
       vsync: this,
       duration: const Duration(milliseconds: 1500),
     );
-    // 4. prepare TweenSequence
-    _tween = TweenSequence<Alignment>(
-      [
-        TweenSequenceItem(
-          tween: Tween(
-            begin: const Alignment(-1, 3),
-            end: Alignment.topLeft,
-          ).chain(
-            CurveTween(curve: Curves.fastLinearToSlowEaseIn),
-          ),
-          weight: 2,
-        ),
-        TweenSequenceItem(
-          tween: ConstantTween(Alignment.topLeft),
-          weight: 1,
-        ),
-        TweenSequenceItem(
-          tween: Tween(
-            begin: Alignment.topLeft,
-            end: Alignment.topRight,
-          ),
-          weight: 1,
-        ),
-        TweenSequenceItem(
-          tween: Tween(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-          ),
-          weight: 1,
-        ),
-        TweenSequenceItem(
-          tween: Tween(
-            begin: Alignment.bottomLeft,
-            end: Alignment.bottomRight,
-          ),
-          weight: 1,
-        ),
-        TweenSequenceItem(
-          tween: Tween(
-            begin: Alignment.bottomRight,
-            end: Alignment.topLeft,
-          ),
-          weight: 1,
-        ),
-        TweenSequenceItem(
-          tween: Tween(
-            begin: Alignment.topLeft,
-            end: Alignment.topRight,
-          ),
-          weight: 1,
-        ),
-        TweenSequenceItem(
-          tween: ConstantTween(Alignment.topRight),
-          weight: 0.5,
-        ),
-        TweenSequenceItem(
-          tween: Tween(
-            begin: Alignment.topRight,
-            end: Alignment.center,
-          ).chain(
-            CurveTween(curve: Curves.easeIn),
-          ),
-          weight: 2.5,
-        ),
-      ],
-    );
-    // 5. create Animation by AnimationController x Tween
-    _alignAnimation = _controller.drive(_tween);
+
     super.initState();
   }
 
@@ -107,20 +40,7 @@ class _ChainWithAnimatedWidgetState extends State<ChainWithAnimatedWidget>
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        AnimatedBuilder(
-          // 6. merging animations to be apply multiple effects to within AnimatedBuilder
-          animation: _alignAnimation,
-          builder: (context, _) {
-            return Align(
-              alignment: _alignAnimation.value,
-              child: Image.asset(
-                'assets/images/dash_bird_pencil.png',
-                width: 200,
-                height: 200,
-              ),
-            );
-          },
-        ),
+        AnimatedDashBird(controller: _controller),
         Align(
           alignment: Alignment.bottomCenter,
           child: Padding(
@@ -133,7 +53,7 @@ class _ChainWithAnimatedWidgetState extends State<ChainWithAnimatedWidget>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(
-                  'With AnimatedBuilder: ',
+                  'With AnimatedWidget: ',
                   style: TextStyle(
                     color: Colors.blue,
                     fontWeight: FontWeight.bold,
@@ -161,5 +81,77 @@ class _ChainWithAnimatedWidgetState extends State<ChainWithAnimatedWidget>
     }
     controller.forward();
     setState(() => hasAppeared = true);
+  }
+}
+
+class AnimatedDashBird extends AnimatedWidget {
+  const AnimatedDashBird({
+    super.key,
+    required AnimationController controller,
+  })  : _controller = controller,
+        super(
+          listenable: controller,
+        );
+
+  final AnimationController _controller;
+
+  @override
+  Widget build(BuildContext context) {
+    final alignAnimation = Tween<Alignment>(
+      begin: const Alignment(-1, 3),
+      end: Alignment.topLeft,
+    ).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(
+          0,
+          0.3,
+          curve: Curves.fastLinearToSlowEaseIn,
+        ),
+      ),
+    );
+
+    final rotateAnimation = Tween<double>(
+      begin: 0,
+      end: 6 * pi,
+    ).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(
+          0.4,
+          0.7,
+          curve: Curves.ease,
+        ),
+      ),
+    );
+
+    final opacityAnimation = Tween<double>(
+      begin: 1,
+      end: 0,
+    ).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(
+          0.8,
+          1,
+          curve: Curves.ease,
+        ),
+      ),
+    );
+
+    return Align(
+      alignment: alignAnimation.value,
+      child: Opacity(
+        opacity: opacityAnimation.value,
+        child: Transform.rotate(
+          angle: rotateAnimation.value,
+          child: Image.asset(
+            'assets/images/dash_bird_pencil.png',
+            width: 200,
+            height: 200,
+          ),
+        ),
+      ),
+    );
   }
 }
