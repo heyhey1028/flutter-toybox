@@ -3,16 +3,15 @@ import 'dart:math';
 import 'package:animation_playground/widgets/base_button.dart';
 import 'package:flutter/material.dart';
 
-class ChainWithAnimatedWidget extends StatefulWidget {
-  const ChainWithAnimatedWidget({super.key});
+class ChainMultipleEffects extends StatefulWidget {
+  const ChainMultipleEffects({super.key});
 
   @override
-  State<ChainWithAnimatedWidget> createState() =>
-      _ChainWithAnimatedWidgetState();
+  State<ChainMultipleEffects> createState() => _ChainMultipleEffectsState();
 }
 
 // 1. define StatefulWidget with SingleTickerProviderStateMixin
-class _ChainWithAnimatedWidgetState extends State<ChainWithAnimatedWidget>
+class _ChainMultipleEffectsState extends State<ChainMultipleEffects>
     with SingleTickerProviderStateMixin {
   // 2. define AnimationController & Tween & Animation
   late AnimationController _controller;
@@ -24,7 +23,7 @@ class _ChainWithAnimatedWidgetState extends State<ChainWithAnimatedWidget>
     // 3. initialize controller
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1500),
+      duration: const Duration(milliseconds: 3000),
     );
 
     super.initState();
@@ -53,7 +52,7 @@ class _ChainWithAnimatedWidgetState extends State<ChainWithAnimatedWidget>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(
-                  'With AnimatedWidget: ',
+                  'With ChainMultipleEffects: ',
                   style: TextStyle(
                     color: Colors.blue,
                     fontWeight: FontWeight.bold,
@@ -97,54 +96,54 @@ class AnimatedDashBird extends AnimatedWidget {
 
   @override
   Widget build(BuildContext context) {
-    final alignAnimation = Tween<Alignment>(
-      begin: const Alignment(0, 3),
-      end: Alignment.center,
-    ).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: const Interval(
-          0,
-          0.3,
-          curve: Curves.fastLinearToSlowEaseIn,
-        ),
-      ),
-    );
+    final sequencedRotateAnimation = TweenSequence<double>([
+      TweenSequenceItem(tween: ConstantTween(0), weight: 3),
+      TweenSequenceItem(tween: Tween(begin: 0, end: 6 * pi), weight: 3),
+      TweenSequenceItem(tween: ConstantTween(0), weight: 4),
+    ]).animate(_controller);
 
-    final rotateAnimation = Tween<double>(
-      begin: 0,
-      end: 6 * pi,
-    ).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: const Interval(
-          0.4,
-          0.7,
-          curve: Curves.ease,
-        ),
-      ),
-    );
+    final sequencedOpacityAnimation = TweenSequence<double>(
+      [
+        TweenSequenceItem(tween: ConstantTween(1), weight: 5),
+        TweenSequenceItem(tween: Tween(begin: 1, end: 0), weight: 2),
+        TweenSequenceItem(tween: ConstantTween(0), weight: 3),
+        TweenSequenceItem(tween: Tween(begin: 0, end: 1), weight: 1),
+      ],
+    ).animate(_controller);
 
-    final opacityAnimation = Tween<double>(
-      begin: 1,
-      end: 0,
-    ).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: const Interval(
-          0.8,
-          1,
-          curve: Curves.ease,
-        ),
-      ),
-    );
+    final sequencedAlignAnimation = TweenSequence<Alignment>(
+      [
+        TweenSequenceItem(
+            tween: Tween(begin: const Alignment(-1, 3), end: Alignment.topLeft)
+                .chain(CurveTween(curve: Curves.fastLinearToSlowEaseIn)),
+            weight: 2),
+        TweenSequenceItem(tween: ConstantTween(Alignment.topLeft), weight: 1),
+        TweenSequenceItem(
+            tween: Tween(begin: Alignment.topLeft, end: Alignment.topRight),
+            weight: 1),
+        TweenSequenceItem(
+            tween: Tween(begin: Alignment.topRight, end: Alignment.bottomLeft),
+            weight: 1),
+        TweenSequenceItem(
+            tween:
+                Tween(begin: Alignment.bottomLeft, end: Alignment.bottomRight),
+            weight: 1),
+        TweenSequenceItem(
+            tween: ConstantTween(Alignment.bottomRight), weight: 2),
+        TweenSequenceItem(
+            tween: Tween(begin: Alignment.bottomRight, end: Alignment.center)
+                .chain(CurveTween(curve: Curves.easeIn)),
+            weight: 1),
+        TweenSequenceItem(tween: ConstantTween(Alignment.center), weight: 1),
+      ],
+    ).animate(_controller);
 
     return Align(
-      alignment: alignAnimation.value,
+      alignment: sequencedAlignAnimation.value,
       child: Opacity(
-        opacity: opacityAnimation.value,
+        opacity: sequencedOpacityAnimation.value,
         child: Transform.rotate(
-          angle: rotateAnimation.value,
+          angle: sequencedRotateAnimation.value,
           child: Image.asset(
             'assets/images/dash_bird_pencil.png',
             width: 200,
