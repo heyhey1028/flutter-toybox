@@ -52,7 +52,7 @@ import SquarePointOfSaleSDK
         }
         
         SCCAPIRequest.setApplicationID("sq0idp-bICm22xi65P8r2aNhObW9w")
-        SCCAPIRequest.clientID = "sq0idp-bICm22xi65P8r2aNhObW9w"
+        // SCCAPIRequest.clientID = "sq0idp-bICm22xi65P8r2aNhObW9w"
         var request: SCCAPIRequest?
         do{
             request = try SCCAPIRequest(callbackURL: callbackURL,
@@ -61,7 +61,7 @@ import SquarePointOfSaleSDK
                                         locationID: nil,
                                         notes:memo,
                                         customerID: nil,
-                                        supportedTenderTypes: SCCAPIRequestTenderTypeCard, // 支払い方法の設定
+                                        supportedTenderTypes: .all, // 支払い方法の設定
                                         clearsDefaultFees: true, // ???
                                         returnsAutomaticallyAfterPayment: true,
                                         disablesKeyedInCardEntry: disablesKeyedInCardEntry,
