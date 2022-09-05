@@ -1,7 +1,6 @@
-import 'dart:math';
-
-import 'package:animation_playground/widgets/base_button.dart';
 import 'package:flutter/material.dart';
+
+import '../../widgets/base_button.dart';
 
 class StaggeredAnimationSample extends StatefulWidget {
   const StaggeredAnimationSample({super.key});
@@ -40,7 +39,7 @@ class _StaggeredAnimationSampleState extends State<StaggeredAnimationSample>
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        AnimatedDashBird(controller: _controller),
+        AnimatedDashBirds(controller: _controller),
         Align(
           alignment: Alignment.bottomCenter,
           child: Padding(
@@ -53,7 +52,7 @@ class _StaggeredAnimationSampleState extends State<StaggeredAnimationSample>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(
-                  'Chained animations: ',
+                  'Simple staggered animations: ',
                   style: TextStyle(
                     color: Colors.blue,
                     fontWeight: FontWeight.bold,
@@ -84,8 +83,8 @@ class _StaggeredAnimationSampleState extends State<StaggeredAnimationSample>
   }
 }
 
-class AnimatedDashBird extends AnimatedWidget {
-  const AnimatedDashBird({
+class AnimatedDashBirds extends AnimatedWidget {
+  const AnimatedDashBirds({
     super.key,
     required AnimationController controller,
   })  : _controller = controller,
@@ -97,61 +96,140 @@ class AnimatedDashBird extends AnimatedWidget {
 
   @override
   Widget build(BuildContext context) {
-    final alignAnimation = Tween<Alignment>(
-      begin: const Alignment(0, 3),
-      end: Alignment.center,
+    final birdOneAnimation = Tween<Offset>(
+      begin: const Offset(-1000, 0),
+      end: Offset.zero,
     ).animate(
       CurvedAnimation(
         parent: _controller,
         curve: const Interval(
           0,
           0.3,
-          curve: Curves.fastLinearToSlowEaseIn,
+          // curve: Curves.fastLinearToSlowEaseIn,
         ),
       ),
     );
-
-    final rotateAnimation = Tween<double>(
-      begin: 0,
-      end: 6 * pi,
+    final birdTwoAnimation = Tween<Offset>(
+      begin: const Offset(-1000, 0),
+      end: Offset.zero,
+    ).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(
+          0.1,
+          0.4,
+          // curve: Curves.fastLinearToSlowEaseIn,
+        ),
+      ),
+    );
+    final birdThreeAnimation = Tween<Offset>(
+      begin: const Offset(-1000, 0),
+      end: Offset.zero,
+    ).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(
+          0.2,
+          0.5,
+          // curve: Curves.fastLinearToSlowEaseIn,
+        ),
+      ),
+    );
+    final birdFourAnimation = Tween<Offset>(
+      begin: const Offset(-1000, 0),
+      end: Offset.zero,
+    ).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(
+          0.3,
+          0.6,
+          // curve: Curves.fastLinearToSlowEaseIn,
+        ),
+      ),
+    );
+    final birdFiveAnimation = Tween<Offset>(
+      begin: const Offset(-1000, 0),
+      end: Offset.zero,
     ).animate(
       CurvedAnimation(
         parent: _controller,
         curve: const Interval(
           0.4,
           0.7,
-          curve: Curves.ease,
+          // curve: Curves.fastLinearToSlowEaseIn,
         ),
       ),
     );
 
-    final opacityAnimation = Tween<double>(
-      begin: 1,
-      end: 0,
-    ).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: const Interval(
-          0.8,
-          1,
-          curve: Curves.ease,
-        ),
-      ),
-    );
-
-    return Align(
-      alignment: alignAnimation.value,
-      child: Opacity(
-        opacity: opacityAnimation.value,
-        child: Transform.rotate(
-          angle: rotateAnimation.value,
-          child: Image.asset(
-            'assets/images/dash_bird_pencil.png',
-            width: 200,
-            height: 200,
+    return SizedBox(
+      width: double.infinity,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const SizedBox(height: 120),
+          Transform.translate(
+            offset: birdOneAnimation.value,
+            child: Image.asset(
+              'assets/images/dash_bird_coffee.png',
+              width: 200,
+              height: 120,
+            ),
           ),
-        ),
+          Transform.translate(
+            offset: birdTwoAnimation.value,
+            child: Image.asset(
+              'assets/images/dash_bird_nightcap.png',
+              width: 200,
+              height: 120,
+            ),
+          ),
+          Transform.translate(
+            offset: birdThreeAnimation.value,
+            child: Image.asset(
+              'assets/images/dash_bird_glasses.png',
+              width: 200,
+              height: 120,
+            ),
+          ),
+          Transform.translate(
+            offset: birdFourAnimation.value,
+            child: Image.asset(
+              'assets/images/dash_bird_rockstar.png',
+              width: 200,
+              height: 120,
+            ),
+          ),
+          Transform.translate(
+            offset: birdFiveAnimation.value,
+            child: Image.asset(
+              'assets/images/dash_bird_super.png',
+              width: 200,
+              height: 120,
+            ),
+          ),
+        ],
       ),
     );
   }
+
+  // Animation<Offset> _getAnimation(
+  //   AnimationController controller,
+  //   double begin,
+  //   double end,
+  // ) {
+  //   return Tween<Offset>(
+  //     begin: const Offset(-1000, 0),
+  //     end: Offset.zero,
+  //   ).animate(
+  //     CurvedAnimation(
+  //       parent: controller,
+  //       curve: Interval(
+  //         begin,
+  //         end,
+  //         curve: Curves.fastLinearToSlowEaseIn,
+  //       ),
+  //     ),
+  //   );
+  // }
 }
