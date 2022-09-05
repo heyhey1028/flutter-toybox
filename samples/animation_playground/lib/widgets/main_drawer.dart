@@ -1,5 +1,6 @@
 import 'package:animation_playground/features/chain_animation/chain_animation_screen.dart';
 import 'package:animation_playground/features/multiple_effects/multiple_effects_screen.dart';
+import 'package:animation_playground/features/staggered_animation/staggered_animation_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../features/basic_animation/basic_anim_screen.dart';
@@ -54,6 +55,12 @@ class MainDrawer extends StatelessWidget {
               icon: const Icon(Icons.bubble_chart),
               title: 'CHAIN ANIMATION',
               navigateTo: const ChainAnimationScreen(),
+            ),
+            DrawerTile(
+              color: Colors.purple[100],
+              icon: const Icon(Icons.bar_chart),
+              title: 'STAGGERED ANIMATION',
+              navigateTo: const StaggeredAnimationScreen(),
             ),
           ],
         ),
