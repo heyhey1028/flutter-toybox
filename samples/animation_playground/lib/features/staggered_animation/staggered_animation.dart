@@ -1,3 +1,4 @@
+import 'package:animation_playground/widgets/code_modal_content.dart';
 import 'package:flutter/material.dart';
 
 import '../../widgets/base_button.dart';
@@ -39,6 +40,9 @@ class _StaggeredAnimationSampleState extends State<StaggeredAnimationSample>
   Widget build(BuildContext context) {
     return Stack(
       children: [
+        const CodeButton(
+          path: 'assets/codes/staggered_animation.txt',
+        ),
         AnimatedDashBirds(controller: _controller),
         Align(
           alignment: Alignment.bottomCenter,

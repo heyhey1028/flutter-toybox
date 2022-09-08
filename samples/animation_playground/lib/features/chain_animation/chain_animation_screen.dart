@@ -9,12 +9,18 @@ import 'chained_animation.dart';
 import 'chained_sequenced_animation.dart';
 import 'sequenced_animation.dart';
 
-final pageProvider = StateProvider((ref) => 0.0);
+final chainAnimationPageProvider = StateProvider((ref) => 0.0);
 
 const pages = <Widget>[
   SequencedAnimationSample(),
   ChainedAnimationSample(),
   ChainedSequencedAnimationSample(),
+];
+
+const pagePath = <String>[
+  'lib/features/chain_animation/sequenced_animation.dart',
+  'lib/features/chain_animation/chained_animation.dart',
+  'lib/features/chain_animation/chained_sequence_animation.dart',
 ];
 
 class ChainAnimationScreen extends HookConsumerWidget {
@@ -24,30 +30,29 @@ class ChainAnimationScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = usePageController();
     return AppScaffold(
-      title: Column(
-        children: [
-          const BorderedText(
-            text: 'CHAIN ANIMATION',
-            textColor: Colors.white,
-            borderColor: Colors.blue,
-            fontSize: 20,
-            strokeWidth: 5,
+      title: const BorderedText(
+        text: 'CHAIN ANIMATION',
+        textColor: Colors.white,
+        borderColor: Colors.blue,
+        fontSize: 20,
+        strokeWidth: 5,
+      ),
+      bottom: PreferredSize(
+        preferredSize: const Size(double.infinity, 8),
+        child: Consumer(
+          builder: (context, ref, _) => DotsIndicator(
+            dotsCount: pages.length,
+            position: ref.watch(chainAnimationPageProvider),
           ),
-          const SizedBox(height: 4),
-          Consumer(
-            builder: (context, ref, _) => DotsIndicator(
-              dotsCount: pages.length,
-              position: ref.watch(pageProvider),
-            ),
-          ),
-        ],
+        ),
       ),
       color: Colors.pink,
       body: PageView(
         controller: controller,
-        onPageChanged: (value) => ref.read(pageProvider.notifier).update(
-              (state) => value.toDouble(),
-            ),
+        onPageChanged: (value) =>
+            ref.read(chainAnimationPageProvider.notifier).update(
+                  (state) => value.toDouble(),
+                ),
         children: pages,
       ),
     );

@@ -8,7 +8,13 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '/widgets/app_scaffold.dart';
 
-final pageProvider = StateProvider((ref) => 0.0);
+final basicAnimationPageProvider = StateProvider((ref) => 0.0);
+
+const pages = <Widget>[
+  BasicWithAnimBuilder(),
+  BasicWithAnimatedWidget(),
+  BasicWithSlideTransition(),
+];
 
 class BasicAnimationScreen extends HookConsumerWidget {
   const BasicAnimationScreen({super.key});
@@ -17,35 +23,30 @@ class BasicAnimationScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = usePageController();
     return AppScaffold(
-      title: Column(
-        children: [
-          const BorderedText(
-            text: 'BASIC',
-            textColor: Colors.white,
-            borderColor: Colors.blue,
-            fontSize: 24,
-            strokeWidth: 5,
+      title: const BorderedText(
+        text: 'BASIC',
+        textColor: Colors.white,
+        borderColor: Colors.blue,
+        fontSize: 24,
+        strokeWidth: 5,
+      ),
+      bottom: PreferredSize(
+        preferredSize: const Size(double.infinity, 8),
+        child: Consumer(
+          builder: (context, ref, _) => DotsIndicator(
+            dotsCount: pages.length,
+            position: ref.watch(basicAnimationPageProvider),
           ),
-          const SizedBox(height: 4),
-          Consumer(
-            builder: (context, ref, _) => DotsIndicator(
-              dotsCount: 3,
-              position: ref.watch(pageProvider),
-            ),
-          ),
-        ],
+        ),
       ),
       color: Colors.yellow,
       body: PageView(
         controller: controller,
-        onPageChanged: (value) => ref.read(pageProvider.notifier).update(
-              (state) => value.toDouble(),
-            ),
-        children: const [
-          BasicWithAnimBuilder(),
-          BasicWithAnimatedWidget(),
-          BasicWithSlideTransition(),
-        ],
+        onPageChanged: (value) =>
+            ref.read(basicAnimationPageProvider.notifier).update(
+                  (state) => value.toDouble(),
+                ),
+        children: pages,
       ),
     );
   }

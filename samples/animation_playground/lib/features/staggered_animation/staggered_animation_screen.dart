@@ -7,7 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '/widgets/app_scaffold.dart';
 import '../../widgets/bordered_text.dart';
 
-final pageProvider = StateProvider((ref) => 0.0);
+final staggeredAnimationPageProvider = StateProvider((ref) => 0.0);
 
 const pages = <Widget>[
   StaggeredAnimationSample(),
@@ -20,30 +20,29 @@ class StaggeredAnimationScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = usePageController();
     return AppScaffold(
-      title: Column(
-        children: [
-          const BorderedText(
-            text: 'STAGGERED ANIMATION',
-            textColor: Colors.white,
-            borderColor: Colors.blue,
-            fontSize: 16,
-            strokeWidth: 5,
+      title: const BorderedText(
+        text: 'STAGGERED ANIMATION',
+        textColor: Colors.white,
+        borderColor: Colors.blue,
+        fontSize: 16,
+        strokeWidth: 5,
+      ),
+      bottom: PreferredSize(
+        preferredSize: const Size(double.infinity, 8),
+        child: Consumer(
+          builder: (context, ref, _) => DotsIndicator(
+            dotsCount: pages.length,
+            position: ref.watch(staggeredAnimationPageProvider),
           ),
-          const SizedBox(height: 4),
-          Consumer(
-            builder: (context, ref, _) => DotsIndicator(
-              dotsCount: pages.length,
-              position: ref.watch(pageProvider),
-            ),
-          ),
-        ],
+        ),
       ),
       color: Colors.purple,
       body: PageView(
         controller: controller,
-        onPageChanged: (value) => ref.read(pageProvider.notifier).update(
-              (state) => value.toDouble(),
-            ),
+        onPageChanged: (value) =>
+            ref.read(staggeredAnimationPageProvider.notifier).update(
+                  (state) => value.toDouble(),
+                ),
         children: pages,
       ),
     );
