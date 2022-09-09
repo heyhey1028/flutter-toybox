@@ -12,15 +12,11 @@ class CodeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      top: 120,
-      right: 24,
-      child: IconButton(
-        onPressed: () => _CodeModal.show(context, path),
-        icon: const Icon(
-          Icons.code,
-          color: Colors.white,
-        ),
+    return IconButton(
+      onPressed: () => _CodeModal.show(context, path),
+      icon: const Icon(
+        Icons.code,
+        color: Colors.white,
       ),
     );
   }
@@ -70,7 +66,7 @@ class CodeModalContent extends StatelessWidget {
       child: Stack(
         children: [
           Padding(
-            padding: const EdgeInsets.only(bottom: 32, top: 48),
+            padding: const EdgeInsets.only(bottom: 56),
             child: SyntaxView(
               code: code,
               syntax: Syntax.DART,
@@ -80,7 +76,7 @@ class CodeModalContent extends StatelessWidget {
             ),
           ),
           Align(
-            alignment: Alignment.topLeft,
+            alignment: Alignment.bottomRight,
             child: IconButton(
               splashRadius: 12,
               iconSize: 32,
