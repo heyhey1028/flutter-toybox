@@ -1,3 +1,4 @@
+import 'package:animation_playground/constants/dash_bird.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants/sample_page.dart';
@@ -136,7 +137,7 @@ class AnimatedDashBirds extends AnimatedWidget {
           Transform.translate(
             offset: birdOneAnimation.value,
             child: Image.asset(
-              'assets/images/dash_bird_coffee.png',
+              DashBird.coffee.path,
               width: 200,
               height: 120,
             ),
@@ -144,7 +145,7 @@ class AnimatedDashBirds extends AnimatedWidget {
           Transform.translate(
             offset: birdTwoAnimation.value,
             child: Image.asset(
-              'assets/images/dash_bird_nightcap.png',
+              DashBird.nightcap.path,
               width: 200,
               height: 120,
             ),
@@ -152,7 +153,7 @@ class AnimatedDashBirds extends AnimatedWidget {
           Transform.translate(
             offset: birdThreeAnimation.value,
             child: Image.asset(
-              'assets/images/dash_bird_glasses.png',
+              DashBird.glasses.path,
               width: 200,
               height: 120,
             ),
@@ -160,7 +161,7 @@ class AnimatedDashBirds extends AnimatedWidget {
           Transform.translate(
             offset: birdFourAnimation.value,
             child: Image.asset(
-              'assets/images/dash_bird_rockstar.png',
+              DashBird.rockstar.path,
               width: 200,
               height: 120,
             ),
@@ -168,7 +169,7 @@ class AnimatedDashBirds extends AnimatedWidget {
           Transform.translate(
             offset: birdFiveAnimation.value,
             child: Image.asset(
-              'assets/images/dash_bird_super.png',
+              DashBird.superdash.path,
               width: 200,
               height: 120,
             ),

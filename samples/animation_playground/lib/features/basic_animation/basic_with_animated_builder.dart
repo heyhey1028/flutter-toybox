@@ -1,3 +1,4 @@
+import 'package:animation_playground/constants/dash_bird.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants/sample_page.dart';
@@ -52,7 +53,7 @@ class _BasicWithAnimatedBuilderState extends State<BasicWithAnimatedBuilder>
               child: Transform.translate(
                 offset: _animation.value,
                 child: Image.asset(
-                  'assets/images/dash_bird_pc.png',
+                  DashBird.pc.path,
                   width: 200,
                   height: 200,
                 ),

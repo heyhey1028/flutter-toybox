@@ -1,3 +1,4 @@
+import 'package:animation_playground/constants/dash_bird.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants/sample_page.dart';
@@ -48,7 +49,7 @@ class _BasicWithTransitionState extends State<BasicWithTransition>
           position: _animation,
           child: Center(
             child: Image.asset(
-              'assets/images/dash_bird_pc.png',
+              DashBird.pc.path,
               width: 200,
               height: 200,
             ),

@@ -1,3 +1,4 @@
+import 'package:animation_playground/constants/dash_bird.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants/sample_page.dart';
@@ -64,7 +65,7 @@ class _MultipleWithAnimatedBuilderState
                 child: Transform.translate(
                   offset: _offsetAnimation.value,
                   child: Image.asset(
-                    'assets/images/dash_bird_power.png',
+                    DashBird.power.path,
                     width: 400,
                     height: 400,
                   ),

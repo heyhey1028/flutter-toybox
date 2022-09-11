@@ -1,3 +1,4 @@
+import 'package:animation_playground/constants/dash_bird.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants/sample_page.dart';
@@ -55,7 +56,7 @@ class _MultipleWithTransitionState extends State<MultipleWithTransition>
             opacity: _fadeAnimation,
             child: Center(
               child: Image.asset(
-                'assets/images/dash_bird_power.png',
+                DashBird.power.path,
               ),
             ),
           ),

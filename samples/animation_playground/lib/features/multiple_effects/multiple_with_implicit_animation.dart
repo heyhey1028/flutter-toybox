@@ -1,3 +1,4 @@
+import 'package:animation_playground/constants/dash_bird.dart';
 import 'package:animation_playground/widgets/base_button.dart';
 import 'package:flutter/material.dart';
 
@@ -66,7 +67,7 @@ class _MultipleWithImplicitAnimationState
     if (scale == 1) {
       setState(() {
         scale = 1.5;
-        image = Image.asset('assets/images/dash_bird_power.png');
+        image = Image.asset(DashBird.power.path);
         hasAppeared = false;
       });
       return;

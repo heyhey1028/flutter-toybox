@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:animation_playground/constants/dash_bird.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants/sample_page.dart';
@@ -115,7 +116,7 @@ class AnimatedDashBird extends AnimatedWidget {
         child: Transform.rotate(
           angle: sequencedRotateAnimation.value,
           child: Image.asset(
-            'assets/images/dash_bird_pencil.png',
+            DashBird.pencil.path,
             width: 200,
             height: 200,
           ),
