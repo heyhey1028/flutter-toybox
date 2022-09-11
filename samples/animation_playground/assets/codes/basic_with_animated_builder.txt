@@ -68,3 +68,4 @@ class _BasicWithAnimatedBuilderState extends State<BasicWithAnimatedBuilder>
     );
   }
 }
+

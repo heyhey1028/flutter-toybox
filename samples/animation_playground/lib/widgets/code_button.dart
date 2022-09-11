@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_syntax_view/flutter_syntax_view.dart';
+
+import '../global/error_dialog.dart';
 
 class CodeButton extends StatelessWidget {
   const CodeButton({
@@ -34,19 +35,22 @@ class _CodeModal extends StatelessWidget {
     BuildContext context,
     String codePath,
   ) async {
-    final code = await rootBundle.loadString(codePath);
-
-    await showModalBottomSheet<void>(
-      context: context,
-      backgroundColor: Colors.transparent,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      isScrollControlled: true,
-      builder: (BuildContext context) {
-        return CodeModalContent(code: code);
-      },
-    );
+    try {
+      final code = await DefaultAssetBundle.of(context).loadString(codePath);
+      await showModalBottomSheet<void>(
+        context: context,
+        backgroundColor: Colors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        isScrollControlled: true,
+        builder: (BuildContext context) {
+          return CodeModalContent(code: code);
+        },
+      );
+    } on Exception catch (e) {
+      await ErrorDialog.show(context, e);
+    }
   }
 }
 

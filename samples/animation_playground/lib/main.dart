@@ -1,15 +1,23 @@
 // import 'package:firebase_core/firebase_core.dart';
+import 'dart:async';
+
+import 'package:animation_playground/global/error_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // import 'package:animation_playground/firebase_options.dart';
 import './widgets/app_scaffold.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
-  runApp(const MyApp());
+  runZonedGuarded(() {
+    WidgetsFlutterBinding.ensureInitialized();
+    // await Firebase.initializeApp(
+    //   options: DefaultFirebaseOptions.currentPlatform,
+    // );
+    FlutterError.onError = (details) => debugPrint('FlutterError: $details');
+    runApp(const MyApp());
+  }, (e, stack) {
+    debugPrint('error:$e, stackTrace: $stack');
+  });
 }
 
 class MyApp extends StatelessWidget {
