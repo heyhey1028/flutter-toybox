@@ -1,5 +1,7 @@
-import 'package:animation_playground/widgets/base_button.dart';
 import 'package:flutter/material.dart';
+
+import '../../constants/sample_page.dart';
+import '../../widgets/control_container.dart';
 
 class MultipleWithTransition extends StatefulWidget {
   const MultipleWithTransition({super.key});
@@ -58,45 +60,11 @@ class _MultipleWithTransitionState extends State<MultipleWithTransition>
             ),
           ),
         ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Padding(
-            padding: const EdgeInsets.only(
-              bottom: 60,
-              right: 40,
-              left: 40,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'With Transition: ',
-                  style: TextStyle(
-                    color: Colors.blue,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                BaseButton(
-                  onPressed: () => _onPressed(_controller),
-                  text: !hasAppeared ? 'IN' : 'OUT',
-                ),
-              ],
-            ),
-          ),
+        ControlContainer(
+          controller: _controller,
+          sample: SamplePage.multipleWithTransition,
         ),
       ],
     );
-  }
-
-  void _onPressed(
-    AnimationController controller,
-  ) {
-    if (controller.status == AnimationStatus.completed) {
-      controller.reverse();
-      setState(() => hasAppeared = false);
-      return;
-    }
-    controller.forward();
-    setState(() => hasAppeared = true);
   }
 }

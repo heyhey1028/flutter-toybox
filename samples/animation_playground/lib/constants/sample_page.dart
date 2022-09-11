@@ -5,7 +5,7 @@ enum SamplePage {
     url:
         'https://github.com/heyhey1028/flutter-toybox/blob/feature/8_animation_playground/samples/animation_playground/lib/features/basic_animation/basic_with_animated_widget.dart',
   ),
-  basicWithAniamtionBuilder(
+  basicWithAniamatedBuilder(
     subTitle: 'With Animation Builder',
     codePath: 'assets/codes/basic_with_animation_builder.txt',
     url:
@@ -23,7 +23,7 @@ enum SamplePage {
     url:
         'https://github.com/heyhey1028/flutter-toybox/blob/feature/8_animation_playground/samples/animation_playground/lib/features/multiple_effects/multiple_with_animated_widget.dart',
   ),
-  multipleWithAnimationBuilder(
+  multipleWithAnimatedBuilder(
     subTitle: 'With Animation Builder',
     codePath: 'assets/codes/multiple_with_animation_builder.txt',
     url:

@@ -1,7 +1,9 @@
 import 'dart:math';
 
-import 'package:animation_playground/widgets/base_button.dart';
 import 'package:flutter/material.dart';
+
+import '../../constants/sample_page.dart';
+import '../../widgets/control_container.dart';
 
 class ChainedAnimationSample extends StatefulWidget {
   const ChainedAnimationSample({super.key});
@@ -40,46 +42,12 @@ class _ChainedAnimationSampleState extends State<ChainedAnimationSample>
     return Stack(
       children: [
         AnimatedDashBird(controller: _controller),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Padding(
-            padding: const EdgeInsets.only(
-              bottom: 60,
-              right: 40,
-              left: 40,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Chained animations: ',
-                  style: TextStyle(
-                    color: Colors.blue,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                BaseButton(
-                  onPressed: () => _onPressed(_controller),
-                  text: !hasAppeared ? 'IN' : 'OUT',
-                ),
-              ],
-            ),
-          ),
+        ControlContainer(
+          controller: _controller,
+          sample: SamplePage.chainedAnimation,
         ),
       ],
     );
-  }
-
-  void _onPressed(
-    AnimationController controller,
-  ) {
-    if (controller.status == AnimationStatus.completed) {
-      controller.reverse();
-      setState(() => hasAppeared = false);
-      return;
-    }
-    controller.forward();
-    setState(() => hasAppeared = true);
   }
 }
 

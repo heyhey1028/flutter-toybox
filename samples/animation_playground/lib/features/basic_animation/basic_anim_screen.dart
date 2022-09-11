@@ -1,5 +1,5 @@
 import 'package:animation_playground/features/basic_animation/basic_with_animated_widget.dart';
-import 'package:animation_playground/features/basic_animation/basic_with_animation_builder.dart';
+import 'package:animation_playground/features/basic_animation/basic_with_animated_builder.dart';
 import 'package:animation_playground/features/basic_animation/basic_with_transition.dart';
 import 'package:animation_playground/widgets/bordered_text.dart';
 import 'package:dots_indicator/dots_indicator.dart';
@@ -11,7 +11,7 @@ import '/widgets/app_scaffold.dart';
 final basicAnimationPageProvider = StateProvider((ref) => 0.0);
 
 const pages = <Widget>[
-  BasicWithAnimBuilder(),
+  BasicWithAnimatedBuilder(),
   BasicWithAnimatedWidget(),
   BasicWithTransition(),
 ];

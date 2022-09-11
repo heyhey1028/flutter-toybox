@@ -1,16 +1,19 @@
-import 'package:animation_playground/widgets/base_button.dart';
 import 'package:flutter/material.dart';
 
-class MultipleWithAnimBuilder extends StatefulWidget {
-  const MultipleWithAnimBuilder({super.key});
+import '../../constants/sample_page.dart';
+import '../../widgets/control_container.dart';
+
+class MultipleWithAnimatedBuilder extends StatefulWidget {
+  const MultipleWithAnimatedBuilder({super.key});
 
   @override
-  State<MultipleWithAnimBuilder> createState() =>
-      _MultipleWithAnimBuilderState();
+  State<MultipleWithAnimatedBuilder> createState() =>
+      _MultipleWithAnimatedBuilderState();
 }
 
 // 1. define StatefulWidget with SingleTickerProviderStateMixin
-class _MultipleWithAnimBuilderState extends State<MultipleWithAnimBuilder>
+class _MultipleWithAnimatedBuilderState
+    extends State<MultipleWithAnimatedBuilder>
     with SingleTickerProviderStateMixin {
   // 2. define AnimationController & Tween & Animation
   late AnimationController _controller;
@@ -70,45 +73,11 @@ class _MultipleWithAnimBuilderState extends State<MultipleWithAnimBuilder>
             );
           },
         ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Padding(
-            padding: const EdgeInsets.only(
-              bottom: 60,
-              right: 40,
-              left: 40,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'With AnimatedBuilder: ',
-                  style: TextStyle(
-                    color: Colors.blue,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                BaseButton(
-                  onPressed: () => _onPressed(_controller),
-                  text: !hasAppeared ? 'IN' : 'OUT',
-                ),
-              ],
-            ),
-          ),
+        ControlContainer(
+          controller: _controller,
+          sample: SamplePage.multipleWithAnimatedBuilder,
         ),
       ],
     );
-  }
-
-  void _onPressed(
-    AnimationController controller,
-  ) {
-    if (controller.status == AnimationStatus.completed) {
-      controller.reverse();
-      setState(() => hasAppeared = false);
-      return;
-    }
-    controller.forward();
-    setState(() => hasAppeared = true);
   }
 }

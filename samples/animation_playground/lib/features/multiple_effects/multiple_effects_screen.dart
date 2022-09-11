@@ -7,13 +7,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '/widgets/app_scaffold.dart';
 import '../../widgets/bordered_text.dart';
 import 'multiple_with_animated_widget.dart';
-import 'multiple_with_animation_builder.dart';
+import 'multiple_with_animated_builder.dart';
 import 'multiple_with_transition.dart';
 
 final multipleEffectsPageProvider = StateProvider((ref) => 0.0);
 
 const pages = [
-  MultipleWithAnimBuilder(),
+  MultipleWithAnimatedBuilder(),
   MultipleWithAnimatedWidget(),
   MultipleWithTransition(),
   MultipleWithImplicitAnimation(),
