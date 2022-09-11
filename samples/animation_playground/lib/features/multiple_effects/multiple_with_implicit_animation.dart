@@ -1,17 +1,17 @@
 import 'package:animation_playground/widgets/base_button.dart';
 import 'package:flutter/material.dart';
 
-class MultipleWithImplicitlyAnimation extends StatefulWidget {
-  const MultipleWithImplicitlyAnimation({super.key});
+class MultipleWithImplicitAnimation extends StatefulWidget {
+  const MultipleWithImplicitAnimation({super.key});
 
   @override
-  State<MultipleWithImplicitlyAnimation> createState() =>
-      _MultipleWithImplicitlyAnimationState();
+  State<MultipleWithImplicitAnimation> createState() =>
+      _MultipleWithImplicitAnimationState();
 }
 
 // 1. no SingleTickerProviderStateMixin is needed for ImplicitlyAnimatedWidgets
-class _MultipleWithImplicitlyAnimationState
-    extends State<MultipleWithImplicitlyAnimation> {
+class _MultipleWithImplicitAnimationState
+    extends State<MultipleWithImplicitAnimation> {
   // 2. define the initial value for ImplicitlyAnimatedWidget
   double scale = 1;
   Widget image = const CircleAvatar(backgroundColor: Colors.blue);

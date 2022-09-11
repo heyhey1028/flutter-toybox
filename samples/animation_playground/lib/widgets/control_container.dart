@@ -1,4 +1,4 @@
-import 'package:animation_playground/constants/samples.dart';
+import 'package:animation_playground/constants/sample_page.dart';
 import 'package:animation_playground/widgets/base_button.dart';
 import 'package:animation_playground/widgets/code_button.dart';
 import 'package:animation_playground/widgets/github_button.dart';
@@ -12,7 +12,7 @@ class ControlContainer extends StatefulWidget {
   });
 
   final AnimationController controller;
-  final Sample sample;
+  final SamplePage sample;
 
   @override
   State<ControlContainer> createState() => _ControlContainerState();

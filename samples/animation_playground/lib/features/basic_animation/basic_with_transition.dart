@@ -1,16 +1,15 @@
 import 'package:animation_playground/widgets/base_button.dart';
 import 'package:flutter/material.dart';
 
-class BasicWithSlideTransition extends StatefulWidget {
-  const BasicWithSlideTransition({super.key});
+class BasicWithTransition extends StatefulWidget {
+  const BasicWithTransition({super.key});
 
   @override
-  State<BasicWithSlideTransition> createState() =>
-      _BasicWithSlideTransitionState();
+  State<BasicWithTransition> createState() => _BasicWithTransitionState();
 }
 
 // 1. define StatefulWidget with SingleTickerProviderStateMixin
-class _BasicWithSlideTransitionState extends State<BasicWithSlideTransition>
+class _BasicWithTransitionState extends State<BasicWithTransition>
     with SingleTickerProviderStateMixin {
   // 2. define AnimationController & Tween & Animation
   late AnimationController _controller;

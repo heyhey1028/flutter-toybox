@@ -1,4 +1,4 @@
-import 'package:animation_playground/features/multiple_effects/multiple_with_implicitly_animation.dart';
+import 'package:animation_playground/features/multiple_effects/multiple_with_implicit_animation.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -16,7 +16,7 @@ const pages = [
   MultipleWithAnimBuilder(),
   MultipleWithAnimatedWidget(),
   MultipleWithTransition(),
-  MultipleWithImplicitlyAnimation(),
+  MultipleWithImplicitAnimation(),
 ];
 
 class MultipleEffectsScreen extends HookConsumerWidget {
