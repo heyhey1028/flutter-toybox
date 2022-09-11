@@ -6,10 +6,10 @@ enum SamplePage {
         'https://github.com/heyhey1028/flutter-toybox/blob/feature/8_animation_playground/samples/animation_playground/lib/features/basic_animation/basic_with_animated_widget.dart',
   ),
   basicWithAniamatedBuilder(
-    subTitle: 'With Animation Builder',
-    codePath: 'assets/codes/basic_with_animation_builder.txt',
+    subTitle: 'With Animated Builder',
+    codePath: 'assets/codes/basic_with_animated_builder.txt',
     url:
-        'https://github.com/heyhey1028/flutter-toybox/blob/feature/8_animation_playground/samples/animation_playground/lib/features/basic_animation/basic_with_animation_builder.dart',
+        'https://github.com/heyhey1028/flutter-toybox/blob/feature/8_animation_playground/samples/animation_playground/lib/features/basic_animation/basic_with_animated_builder.dart',
   ),
   basicWithTransition(
     subTitle: 'With Transition',
