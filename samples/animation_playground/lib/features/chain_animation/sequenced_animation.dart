@@ -126,7 +126,7 @@ class _SequencedAnimationSampleState extends State<SequencedAnimationSample>
         ),
         ControlContainer(
           controller: _controller,
-          sample: SamplePage.chainedSequencedAnimation,
+          sample: SamplePage.sequencedAnimation,
         ),
       ],
     );

@@ -64,7 +64,26 @@ enum SamplePage {
     codePath: 'assets/codes/staggered_animation.txt',
     url:
         'https://github.com/heyhey1028/flutter-toybox/blob/feature/8_animation_playground/samples/animation_playground/lib/features/staggered_animation/staggered_animation.dart',
-  );
+  ),
+  staggeredSequencedAnimation(
+    subTitle: 'Staggered and Sequenced animations',
+    codePath: 'assets/codes/staggered_sequenced_animation.txt',
+    url:
+        'https://github.com/heyhey1028/flutter-toybox/blob/feature/8_animation_playground/samples/animation_playground/lib/features/staggered_animation/staggered_animation.dart',
+  ),
+  staggeredMultipleEffectAnimation(
+    subTitle: 'Staggered Multiple Effect animations',
+    codePath: 'assets/codes/staggered_multiple_effect_animation.txt',
+    url:
+        'https://github.com/heyhey1028/flutter-toybox/blob/feature/8_animation_playground/samples/animation_playground/lib/features/staggered_animation/staggered_animation.dart',
+  ),
+  staggeredChainedAnimation(
+    subTitle: 'Staggered Chained animations',
+    codePath: 'assets/codes/staggered_chained_animation.txt',
+    url:
+        'https://github.com/heyhey1028/flutter-toybox/blob/feature/8_animation_playground/samples/animation_playground/lib/features/staggered_animation/staggered_animation.dart',
+  ),
+  ;
 
   const SamplePage({
     required this.subTitle,
