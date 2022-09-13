@@ -17,6 +17,18 @@ enum SamplePage {
     url:
         'https://github.com/heyhey1028/flutter-toybox/blob/feature/8_animation_playground/samples/animation_playground/lib/features/basic_animation/basic_with_transition.dart',
   ),
+  curveWithCurvedAnimation(
+    subTitle: 'With CurvedAnimation',
+    codePath: 'assets/codes/curve_with_curved_animation.txt',
+    url:
+        'https://github.com/heyhey1028/flutter-toybox/blob/feature/8_animation_playground/samples/animation_playground/lib/features/curved_animation/with_curved_animation.dart',
+  ),
+  curveWithCurveTween(
+    subTitle: 'With CurveTween',
+    codePath: 'assets/codes/curve_with_curve_tween.txt',
+    url:
+        'https://github.com/heyhey1028/flutter-toybox/blob/feature/8_animation_playground/samples/animation_playground/lib/features/curved_animation/with_cruve_tween.dart',
+  ),
   multipleWithAnimatedWidget(
     subTitle: 'With AnimatedWidget',
     codePath: 'assets/codes/multiple_with_animated_widget.txt',

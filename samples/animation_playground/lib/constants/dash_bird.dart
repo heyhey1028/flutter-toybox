@@ -6,7 +6,8 @@ enum DashBird {
   nightcap(path: 'assets/images/dash_bird_nightcap.png'),
   pc(path: 'assets/images/dash_bird_pc.png'),
   rockstar(path: 'assets/images/dash_bird_rockstar.png'),
-  superdash(path: 'assets/images/dash_bird_superdash.png');
+  superdash(path: 'assets/images/dash_bird_superdash.png'),
+  bunny(path: 'assets/images/dash_bird_bunny.png');
 
   const DashBird({required this.path});
 

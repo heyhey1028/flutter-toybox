@@ -1,4 +1,5 @@
 import 'package:animation_playground/features/chain_animation/chain_animation_screen.dart';
+import 'package:animation_playground/features/curved_animation/curved_animation_screen.dart';
 import 'package:animation_playground/features/multiple_effects/multiple_effects_screen.dart';
 import 'package:animation_playground/features/staggered_animation/staggered_animation_screen.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +44,12 @@ class MainDrawer extends StatelessWidget {
               icon: const Icon(Icons.start),
               title: 'BASIC',
               navigateTo: const BasicAnimationScreen(),
+            ),
+            DrawerTile(
+              color: Colors.green[100],
+              icon: const Icon(Icons.waves),
+              title: 'CURVED ANIMATION',
+              navigateTo: const CurvedAnimationScreen(),
             ),
             DrawerTile(
               color: Colors.orange[100],

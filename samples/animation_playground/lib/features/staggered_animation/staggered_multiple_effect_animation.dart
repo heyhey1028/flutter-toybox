@@ -63,19 +63,20 @@ class AnimatedDashBirds extends AnimatedWidget {
 
   @override
   Widget build(BuildContext context) {
+
     final birdOneAnimation = Tween<Offset>(
       begin: const Offset(-1000, 0),
       end: Offset.zero,
-    ).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: const Interval(
-          0,
-          0.3,
-          // curve: Curves.fastLinearToSlowEaseIn,
-        ),
-      ),
-    );
+    ).chain(Tween()).animate(
+          CurvedAnimation(
+            parent: _controller,
+            curve: const Interval(
+              0,
+              0.3,
+              // curve: Curves.fastLinearToSlowEaseIn,
+            ),
+          ),
+        );
     final birdTwoAnimation = Tween<Offset>(
       begin: const Offset(-1000, 0),
       end: Offset.zero,
