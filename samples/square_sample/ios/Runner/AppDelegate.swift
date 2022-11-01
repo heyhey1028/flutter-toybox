@@ -52,7 +52,7 @@ import SquarePointOfSaleSDK
         }
         
         SCCAPIRequest.setApplicationID("sq0idp-bICm22xi65P8r2aNhObW9w")
-        // SCCAPIRequest.clientID = "sq0idp-bICm22xi65P8r2aNhObW9w"
+        
         var request: SCCAPIRequest?
         do{
             request = try SCCAPIRequest(callbackURL: callbackURL,
