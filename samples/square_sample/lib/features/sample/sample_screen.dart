@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../widgets/app_scaffold.dart';
@@ -44,10 +45,15 @@ class SampleScreen extends ConsumerWidget {
   Future<void> _openSquareReaderPayment(
     WidgetRef ref,
   ) async {
+    final callbackURL = dotenv.get('CALLBACK_URL');
+    final applicationID = dotenv.get('APPLICATION_ID');
+
     final arguments = <String, dynamic>{
       'price': 140,
       'memo': 'test',
       'disablesKeyedInCardEntry': true,
+      'callbackURL': callbackURL,
+      'applicationID': applicationID,
     };
     final transactionID =
         await squareChannel.invokeMethod<String?>('openSquare', arguments);

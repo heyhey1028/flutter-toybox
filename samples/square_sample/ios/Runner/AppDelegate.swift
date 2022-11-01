@@ -25,8 +25,18 @@ import SquarePointOfSaleSDK
           let parameters = call.arguments as! Dictionary<String, Any>
           if let price = parameters["price"] as? Int,
              let memo=parameters["memo"] as? String,
-             let disablesKeyedInCardEntry = parameters["disablesKeyedInCardEntry"] as? Bool{
-              self.openSquare(result: result, price:price, memo:memo, disablesKeyedInCardEntry: disablesKeyedInCardEntry)
+             let disablesKeyedInCardEntry = parameters["disablesKeyedInCardEntry"] as? Bool,
+             let callbackURL = parameters["callbackURL"] as? String,
+             let applicationID = parameters["applicationID"] as? String
+             {
+              self.openSquare(
+                result: result, 
+                price:price, 
+                memo:memo, 
+                disablesKeyedInCardEntry: disablesKeyedInCardEntry,
+                callbackURL: callbackURL,
+                applicationID: applicationID
+            )
           }else{
               print("パラメータの型が不正です")
               result(FlutterMethodNotImplemented)
@@ -38,10 +48,17 @@ import SquarePointOfSaleSDK
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
     
-    private func openSquare(result:@escaping FlutterResult, price: Int, memo: String, disablesKeyedInCardEntry: Bool){
+    private func openSquare(
+        result:@escaping FlutterResult, 
+        price: Int, 
+        memo: String, 
+        disablesKeyedInCardEntry: Bool,
+        callbackURL: String,
+        applicationID: String
+        ){
         final_result = result
         
-        let callbackURL = URL(string: "square-sample://")!
+        let callbackURL = URL(string: callbackURL)!
         
         var amount: SCCMoney?
         do{
@@ -51,7 +68,7 @@ import SquarePointOfSaleSDK
             // エラーハンドリング
         }
         
-        SCCAPIRequest.setApplicationID("sq0idp-bICm22xi65P8r2aNhObW9w")
+        SCCAPIRequest.setApplicationID(applicationID)
         
         var request: SCCAPIRequest?
         do{
