@@ -1,4 +1,4 @@
 {
-    "dart.runPubGetOnPubspecChanges": false,
+    "dart.runPubGetOnPubspecChanges": "never",
     "lldb.library": "/Applications/Xcode.app/Contents/SharedFrameworks/LLDB.framework/Versions/A/LLDB"
 }
