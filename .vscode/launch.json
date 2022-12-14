@@ -15,6 +15,13 @@
         "type": "dart",
         "args": ["-v","--debug"]
       },
+      {
+        "name": "Debug http requests",
+        "program": "samples/http_requests/lib/main.dart",
+        "request": "launch",
+        "type": "dart",
+        "args": ["-v","--debug"]
+      },
     ]
   }
   

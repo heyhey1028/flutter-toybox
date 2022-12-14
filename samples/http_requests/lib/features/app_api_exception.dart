@@ -1,0 +1,1 @@
+class AppApiException implements Exception {}
