@@ -13,8 +13,15 @@ class UserRepository {
   static String endpoint = '/users';
   ApiClient apiClient;
 
-  Future<void> getAllUsers() async {
-    final result = await apiClient.get(endpoint);
-    print(result);
+  Future<List<User>> getAllUsers() async {
+    final response = await apiClient.get(endpoint);
+    final data = jsonDecode(response) as List<dynamic>;
+    return data
+        .map((dynamic e) => User.fromJson(e as Map<String, dynamic>))
+        .toList();
+  }
+
+  Future<User?> getUserById(int userId) async {
+    return (await getAllUsers()).firstWhere((user) => user.id == userId);
   }
 }

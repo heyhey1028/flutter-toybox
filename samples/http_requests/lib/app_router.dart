@@ -21,7 +21,7 @@ final routerProvider = Provider(
               name: 'user_accounts',
               path: ':id/accounts',
               builder: (context, state) {
-                final id = state.params['id']!;
+                final id = int.parse(state.params['id']!);
                 return UserAccountsScreen(userId: id);
               },
             ),
