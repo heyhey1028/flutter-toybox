@@ -4,6 +4,13 @@ import 'package:http_requests/features/models/account.dart';
 import 'package:http_requests/features/models/user_accounts_screen_state.dart';
 import 'package:http_requests/features/view_models/user_accounts_screen_view_model.dart';
 import 'package:http_requests/utils/async_builder.dart';
+import 'package:intl/intl.dart';
+
+extension on num {
+  String formatToYen() {
+    return '${NumberFormat('#,##0').format(this)}円';
+  }
+}
 
 class UserAccountsScreen extends ConsumerWidget {
   const UserAccountsScreen({
@@ -30,17 +37,12 @@ class UserAccountsScreen extends ConsumerWidget {
           return SingleChildScrollView(
             child: Column(
               children: [
-                Column(
-                  children: [
-                    UserInfo(name: user?.name),
-                    TotalBalance(totalBalance: totalBalance),
-                  ],
+                _UserInfo(
+                  name: user?.name,
+                  totalBalance: totalBalance,
                 ),
-                Column(
-                  children: accounts
-                      .map((account) => AccountListItem(account: account))
-                      .toList(),
-                ),
+                const SizedBox(height: 56),
+                _AccountList(accounts: accounts),
               ],
             ),
           );
@@ -50,9 +52,32 @@ class UserAccountsScreen extends ConsumerWidget {
   }
 }
 
-class UserInfo extends ConsumerWidget {
-  const UserInfo({
-    super.key,
+class _UserInfo extends StatelessWidget {
+  const _UserInfo({
+    this.name,
+    required this.totalBalance,
+  });
+
+  final String? name;
+  final int totalBalance;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        children: [
+          _UserName(name: name),
+          const SizedBox(height: 16),
+          _TotalBalance(totalBalance: totalBalance),
+        ],
+      ),
+    );
+  }
+}
+
+class _UserName extends ConsumerWidget {
+  const _UserName({
     this.name,
   });
 
@@ -60,22 +85,18 @@ class UserInfo extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const Text('Users:'),
-          Text(name ?? ''),
-        ],
-      ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        const Text('User:'),
+        Text(name ?? ''),
+      ],
     );
   }
 }
 
-class TotalBalance extends ConsumerWidget {
-  const TotalBalance({
-    super.key,
+class _TotalBalance extends ConsumerWidget {
+  const _TotalBalance({
     required this.totalBalance,
   });
 
@@ -83,22 +104,35 @@ class TotalBalance extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const Text('Total:'),
-          Text('$totalBalance'),
-        ],
-      ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        const Text('Total:'),
+        Text(totalBalance.formatToYen()),
+      ],
     );
   }
 }
 
-class AccountListItem extends ConsumerWidget {
-  const AccountListItem({
-    super.key,
+class _AccountList extends StatelessWidget {
+  const _AccountList({
+    required this.accounts,
+  });
+
+  final List<Account> accounts;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: accounts
+          .map((account) => _AccountListItem(account: account))
+          .toList(),
+    );
+  }
+}
+
+class _AccountListItem extends ConsumerWidget {
+  const _AccountListItem({
     required this.account,
   });
 
@@ -117,7 +151,7 @@ class AccountListItem extends ConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(account.name),
-          Text('${account.balance}'),
+          Text(account.balance.formatToYen()),
         ],
       ),
     );
