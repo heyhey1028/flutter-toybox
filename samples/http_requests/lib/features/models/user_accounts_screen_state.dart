@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:http_requests/features/models/account.dart';
-import 'package:http_requests/features/models/user.dart';
+
+import 'account.dart';
+import 'user.dart';
 
 part 'user_accounts_screen_state.freezed.dart';
 

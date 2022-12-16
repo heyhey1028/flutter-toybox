@@ -1,7 +1,6 @@
 // import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:http_requests/app_router.dart';
 // import './firebase_options.dart';
 import './widgets/app_scaffold.dart';
@@ -23,7 +22,7 @@ class MyApp extends ConsumerWidget {
 
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Technical Challenge',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),

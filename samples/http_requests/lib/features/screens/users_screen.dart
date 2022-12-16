@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:http_requests/features/models/user.dart';
-import 'package:http_requests/features/repositories/account_repository.dart';
-import 'package:http_requests/features/repositories/user_repository.dart';
-import 'package:http_requests/features/view_models/users_screen_view_model.dart';
-import 'package:http_requests/utils/async_builder.dart';
-import 'package:http_requests/widgets/app_scaffold.dart';
+import 'package:http_requests/features/app_api_exception.dart';
+
+import '../../utils/async_builder.dart';
+import '../models/user.dart';
+import '../view_models/users_screen_view_model.dart';
 
 class UsersScreen extends ConsumerWidget {
   const UsersScreen({super.key});
@@ -21,6 +20,17 @@ class UsersScreen extends ConsumerWidget {
           builder: (context, users) {
             return Column(
               children: users.map((user) => _UserListItem(user: user)).toList(),
+            );
+          },
+          errorBuilder: (context, e, s) {
+            var message = e.toString();
+
+            if (e is AppApiException) {
+              message = e.message;
+            }
+
+            return Center(
+              child: Text(message),
             );
           },
         ),

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
+import 'package:http_requests/features/app_api_exception.dart';
 
 final apiClientProvider = Provider<ApiClient>((ref) => ApiClient());
 
@@ -19,48 +20,39 @@ class ApiClient {
 
   static const header = <String, String>{'content-type': 'application/json'};
 
-  Future<String> _safeApiCall(Function callback) async {
+  Future<String> _guardApiCall(Function callback) async {
     try {
-      final response = await callback() as http.Response;
-      return _parseResponse(response.statusCode, response.body);
-    } on SocketException catch (e) {
-      throw Exception('No Internet Connection');
+      final response = await callback.call() as http.Response;
+      return _validateResponse(response.statusCode, response.body);
+    } on Exception catch (e) {
+      if (e is SocketException) {
+        throw AppApiException.noInternet();
+      }
+      rethrow;
     }
   }
 
   Future<String> get(String endpoint) async {
-    return _safeApiCall(() async => http.get(Uri.parse('$baseUrl$endpoint')));
+    return _guardApiCall(() async => http.get(Uri.parse('$baseUrl$endpoint')));
   }
 
-  Future<String> post(String endpoint, {required String body}) async {
-    return '';
-  }
-
-  Future<String> put(String endpoint, {required String body}) async {
-    return '';
-  }
-
-  Future<String> delete(String endpoint) async {
-    return '';
-  }
-
-  String _parseResponse(int statusCode, String body) {
+  String _validateResponse(int statusCode, String body) {
     switch (statusCode) {
       case 200:
       case 201:
         return body;
       case 400:
-        throw Exception('400 Bad Request');
+        throw AppApiException.badRequest();
       case 401:
-        throw Exception('401 Unauthorized');
+        throw AppApiException.unAuthorized();
       case 403:
-        throw Exception('403 Forbidden');
+        throw AppApiException.forbidden();
       case 404:
-        throw Exception('404 Not Found');
+        throw AppApiException.notFound();
       case 500:
-        throw Exception('500 Internal Server Error');
+        throw AppApiException.internalServerError();
       default:
-        throw Exception('Http Status $statusCode Unkown Error');
+        throw AppApiException.unknown();
     }
   }
 }

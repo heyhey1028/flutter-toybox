@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:http_requests/features/models/user_accounts_screen_state.dart';
-import 'package:http_requests/features/repositories/user_repository.dart';
 
+import '../models/user_accounts_screen_state.dart';
 import '../repositories/account_repository.dart';
+import '../repositories/user_repository.dart';
 
 final userAccountsScreenViewModel = StateNotifierProvider.autoDispose
     .family<UserAccountsViewModel, AsyncValue<UserAccountsScreenState>, int>(

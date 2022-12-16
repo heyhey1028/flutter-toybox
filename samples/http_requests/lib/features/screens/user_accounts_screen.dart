@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:http_requests/features/models/account.dart';
-import 'package:http_requests/features/models/user_accounts_screen_state.dart';
-import 'package:http_requests/features/view_models/user_accounts_screen_view_model.dart';
-import 'package:http_requests/utils/async_builder.dart';
 import 'package:intl/intl.dart';
+
+import '../../utils/async_builder.dart';
+import '../app_api_exception.dart';
+import '../models/account.dart';
+import '../models/user_accounts_screen_state.dart';
+import '../view_models/user_accounts_screen_view_model.dart';
 
 extension on num {
   String formatToYen() {
@@ -45,6 +47,18 @@ class UserAccountsScreen extends ConsumerWidget {
                 _AccountList(accounts: accounts),
               ],
             ),
+          );
+        },
+        //
+        errorBuilder: (context, e, s) {
+          var message = e.toString();
+
+          if (e is AppApiException) {
+            message = e.message;
+          }
+
+          return Center(
+            child: Text(message),
           );
         },
       ),

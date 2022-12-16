@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:http_requests/features/models/user.dart';
-import 'package:http_requests/features/repositories/user_repository.dart';
+
+import '../models/user.dart';
+import '../repositories/user_repository.dart';
 
 final usersScreenViewModelProvider = StateNotifierProvider.autoDispose<
     UsersScreenViewModel,

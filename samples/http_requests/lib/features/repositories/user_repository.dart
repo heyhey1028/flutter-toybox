@@ -1,8 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:http_requests/features/api_client.dart';
-import 'package:http_requests/features/models/user.dart';
+
+import '../api_client.dart';
+import '../models/user.dart';
 
 final userRepositoryProvider =
     Provider((ref) => UserRepository(ref.read(apiClientProvider)));
